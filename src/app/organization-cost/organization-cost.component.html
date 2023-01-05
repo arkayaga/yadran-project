@@ -1,0 +1,34 @@
+<div class="container">
+  <div style="float: left; margin-left: 15px">
+    <input id="myInput" type="text" [(ngModel)]="searchedInput" placeholder="Arama" />
+  </div>
+
+  <div>
+    <button class="button" style="float: right; margin-right: 10px" (click)="onAdd()">
+      Gelir / Gider Ekle
+    </button>
+  </div>
+
+  <div class="container">
+    <table id="myTable">
+      <tr class="header">
+        <th>Ad</th>
+        <th>Islem</th>
+      </tr>
+      <tbody *ngFor="let org of orgs | searchFilter : searchedInput : 'name'">
+        <tr>
+          <td>{{ org.name }}</td>
+          <td>
+            <button [swal]="deleteSwal" (confirm)="deleteBtn()" style="float: right" (click)="onDelete(org)">Sil</button>
+            <button
+              style="float: right; margin-right: 5px"
+              (click)="onEdit(org)"
+            >
+              Guncelle
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

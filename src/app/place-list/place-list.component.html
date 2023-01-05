@@ -1,0 +1,31 @@
+<div class="container">
+  <div style="float: left; margin-left: 15px">
+    <input id="myInput" type="text" [(ngModel)]="searchedInput" placeholder="Arama" />
+  </div>
+
+  <div>
+    <button class="button" style="float: right; margin-right: 10px" (click)="onNew()">
+      Mekan Ekle
+    </button>
+  </div>
+
+  <div class="container">
+    <table id="myTable">
+      <tr class="header">
+        <th>Mekan Adi</th>
+        <th>Islem</th>
+      </tr>
+      <tbody
+        *ngFor="let place of places | searchFilter : searchedInput : 'name'"
+      >
+        <tr>
+          <td>{{ place.name }}</td>
+          <td>
+            <button (click)="onEdit(place)">Guncelle</button> |
+            <button (click)="onDelete(place)">Sil</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="container" style="width: 100%">
+  <form [formGroup]="form" (ngSubmit)="onSave()">
+    <h3>Organizasyon Gelir / Gider Ekle</h3>
+
+    <div>
+      <div class="form-group">
+        <input
+          placeholder="Ad*"
+          type="text"
+          name="name"
+          id="name"
+          formControlName="name"
+          class="form-control"
+        />
+        <span
+          *ngIf="!form.get('name').valid && form.get('name').touched"
+          class="help-block"
+        >
+          Lutfen Ad giriniz!
+        </span>
+      </div>
+      <br />
+      <div class="form-group">
+        <input
+          placeholder="Maliyet*"
+          type="number"
+          id="cost"
+          name="cost"
+          formControlName="cost"
+          class="form-control"
+        />
+        <span
+          *ngIf="!form.get('cost').valid && form.get('cost').touched"
+          class="help-block"
+        >
+          Gecerli bir deger giriniz
+        </span>
+      </div>
+      <br />
+      <div class="form-group">
+        <input
+          placeholder="Satis Ucreti*"
+          type="text"
+          id="salePrice"
+          name="salePrice"
+          formControlName="salePrice"
+          class="form-control"
+        />
+        <span
+          *ngIf="!form.get('salePrice').valid && form.get('salePrice').touched"
+          class="help-block"
+        >
+          <span *ngIf="form.get('salePrice').errors.required">
+            Lutfen Satis Ucreti giriniz!</span
+          >
+
+          <span *ngIf="form.get('salePrice').errors?.pattern">
+            Gecerli bir deger giriniz!</span
+          >
+        </span>
+      </div>
+      <br />
+      <div>
+        <select class="custom-select" formControlName="placeId">
+          <option disabled value="null">Salon / Mekan Adi*</option>
+          <option [value]="place.id" *ngFor="let place of places">
+            {{ place.name }}
+          </option>
+        </select>
+        <span
+          *ngIf="!form.get('placeId').valid && form.get('placeId').touched"
+          class="help-block"
+        >
+          Lutfen Salon / Mekan seciniz!
+        </span>
+      </div>
+      <br />
+      <input
+        type="checkbox"
+        id="isPerUser"
+        name="isPerUser"
+        formControlName="isPerUser"
+        class="form-control"
+      />
+      <label> Kullanici Basina</label>
+      <br />
+      <input
+        type="checkbox"
+        id="isActive"
+        name="isActive"
+        formControlName="isActive"
+        class="form-control"
+      />
+      <label> Aktif</label>
+      <br />
+
+      <div>
+        <button type="submit" style="float: inline-end">Kaydet</button>
+      </div>
+    </div>
+  </form>
+</div>
