@@ -1,26 +1,67 @@
-<div class="container">
+<div mat-dialog-content class="dialog-container">
+  <h3 mat-dialog-title>Mekan Ekle / Guncelle</h3>
   <form [formGroup]="form" (ngSubmit)="onSave()">
-    <h3>Mekan Ekle / Guncelle</h3>
-    <div>
-      <div class="form-group" style="float: left; margin-right: 20px">
-        <input
-          placeholder="Ad*"
-          type="text"
-          name="name"
-          id="name"
-          formControlName="name"
-          class="form-control"
-        />
-        <span
-          *ngIf="!form.get('name').valid && form.get('name').touched"
-          class="help-block"
-        >
-          Lutfen Ad giriniz!
-        </span>
-      </div>
+    <div class="form-group item">
+      <mat-form-field class="form-element">
+        <mat-label>Ad</mat-label>
+        <input type="text" matInput required formControlName="name" />
+        <mat-error *ngIf="!form.valid && form.touched">
+          Ad <strong>zorunlu!</strong>
+        </mat-error>
+      </mat-form-field>
 
-      <div class="form-group" style="float: left; margin-right: 20px">
-        <input
+      <mat-form-field class="form-element">
+        <mat-label>Kod</mat-label>
+        <input type="text" matInput required formControlName="shortName" />
+        <mat-error *ngIf="!form.valid && form.touched">
+          Kod <strong>zorunlu!</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <mat-label>% Min Karlilik Orani</mat-label>
+        <input type="number" matInput required formControlName="profitRate" />
+
+        <mat-error
+          *ngIf="form.get('profitRate').touched && form.get('profitRate').errors?.['required']"
+        >
+          Kar orani zorunlu!
+        </mat-error>
+
+        <mat-error
+          *ngIf="
+            form.get('profitRate').touched && form.get('profitRate').invalid
+          "
+        >
+          Gecerli bir deger giriniz!</mat-error
+        >
+      </mat-form-field>
+
+      <div mat-dialog-actions>
+        <button class="btnSave" mat-raised-button type="submit">Kaydet</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- <div class="form-group" style="float: left; margin-right: 20px">
+          <input
+            placeholder="Ad*"
+            type="text"
+            name="name"
+            id="name"
+            formControlName="name"
+            class="form-control"
+          />
+          <span
+            *ngIf="!form.get('name').valid && form.get('name').touched"
+            class="help-block"
+          >
+            Lutfen Ad giriniz!
+          </span>
+        </div> -->
+
+<!-- <input
           placeholder="Kod*"
           type="text"
           name="shortName"
@@ -52,11 +93,4 @@
           class="help-block"
         >
           Lutfen gecerli bir deger giriniz!
-        </span>
-      </div>
-      <div>
-        <button type="submit" style="float: inline-end">Kaydet</button>
-      </div>
-    </div>
-  </form>
-</div>
+        </span> -->

@@ -1,19 +1,27 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="container">
-    <label for="username"><b>Username</b></label>
-    <br />
-    <input
-      type="text"
-      placeholder="Enter Username"
-      name="username"
-      id="username"
-      formControlName="username"
-      #userInput
-    />
-    <div>
-      <label for="password"><b>Password</b></label>
-      <br />
+    <mat-form-field class="form-element">
+      <mat-label>Username</mat-label>
       <input
+        matInput
+        required
+        type="text"
+        placeholder="Enter Username"
+        name="username"
+        id="username"
+        formControlName="username"
+        #userInput
+      />
+      <mat-error *ngIf="!form.valid && form.touched">
+        Lutfen kullanici giriniz!
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-element">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        required
         type="password"
         placeholder="Enter Password"
         name="password"
@@ -21,10 +29,15 @@
         formControlName="password"
         minlength="4"
       />
-    </div>
-    <br />
-    <div>
-      <button type="submit" [disabled]="!loginForm.valid">Login</button>
+      <mat-error *ngIf="!form.valid && form.touched">
+        Lutfen sifre giriniz!
+      </mat-error>
+    </mat-form-field>
+
+    <div class="button">
+      <button class="btnLogin" mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+        Login
+      </button>
     </div>
   </div>
 </form>

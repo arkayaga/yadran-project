@@ -1,9 +1,70 @@
-<div class="container" style="width: 100%">
-  <form [formGroup]="form" (ngSubmit)="onSave()">
-    <h3>Organizasyon Gelir / Gider Ekle</h3>
+<div mat-dialog-content class="dialog-container">
+  <h3 mat-dialog-title>Organizasyon Gelir / Gider Ekle</h3>
 
-    <div>
-      <div class="form-group">
+  <form [formGroup]="form" (ngSubmit)="onSave()">
+    <div class="form-group">
+      <mat-form-field class="form-element">
+        <input type="text" matInput required formControlName="name" />
+        <mat-error *ngIf="!form.valid && form.touched">
+          Ad <strong>zorunlu!</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <input type="number" matInput required formControlName="cost" />
+        <mat-error *ngIf="!form.valid && form.touched">
+          <mat-error *ngIf="form.get('cost').errors?.['required']">
+            Lutfen Maliyet giriniz!
+          </mat-error>
+          <mat-error *ngIf="form.get('cost').errors?.['pattern']">
+            Gecerli bir deger giriniz!</mat-error
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <input type="number" matInput required formControlName="salePrice" />
+        <mat-error *ngIf="!form.valid && form.touched">
+          <mat-error *ngIf="form.get('salePrice').errors?.['required']">
+            Lutfen Satis Ucreti giriniz!
+          </mat-error>
+          <mat-error *ngIf="form.get('salePrice').errors?.['pattern']">
+            Gecerli bir deger giriniz!</mat-error
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element" appearance="fill">
+        <mat-label>Salon / Mekan Adi</mat-label>
+        <mat-select formControlName="placeId" required>
+          <mat-option *ngFor="let place of places" [value]="place.id">
+            {{ place.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="!form.get('placeId').valid && form.get('placeId').touched"
+        >
+          Lutfen Salon / Mekan seciniz!
+        </mat-error>
+      </mat-form-field>
+
+      <section class="check">
+        <mat-checkbox type="checkbox" formControlName="isPerUser">
+          Kullanici Basina
+        </mat-checkbox>
+
+        <mat-checkbox type="checkbox" formControlName="isActive">
+          Aktif
+        </mat-checkbox>
+      </section>
+
+      <div class="action-btn">
+        <button class="btnSave" mat-raised-button type="submit">Kaydet</button>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- <div class="form-group">
         <input
           placeholder="Ad*"
           type="text"
@@ -58,8 +119,8 @@
             Gecerli bir deger giriniz!</span
           >
         </span>
-      </div>
-      <br />
+      </div> -->
+<!-- <br />
       <div>
         <select class="custom-select" formControlName="placeId">
           <option disabled value="null">Salon / Mekan Adi*</option>
@@ -73,8 +134,8 @@
         >
           Lutfen Salon / Mekan seciniz!
         </span>
-      </div>
-      <br />
+      </div> -->
+<!-- <br />
       <input
         type="checkbox"
         id="isPerUser"
@@ -92,11 +153,4 @@
         class="form-control"
       />
       <label> Aktif</label>
-      <br />
-
-      <div>
-        <button type="submit" style="float: inline-end">Kaydet</button>
-      </div>
-    </div>
-  </form>
-</div>
+      <br /> -->

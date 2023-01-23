@@ -1,18 +1,20 @@
+// .dialog-container {
+//   display: flex;
+//   flex-direction: column;
 
-  
-input {
-  display: block;
-}
+//   .form-group {
+//     // flex-direction: column;
+//     // justify-content: justfy;
 
-input.ng-invalid.ng-touched,
-select.ng-invalid.ng-touched {
-  border: 1px solid red;
-}
+//     .form-element {
+//       display: flex;
+//       flex-grow: 1;
+//     }
+//   }
 
-.button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-top: 5px;
-    margin-right: 15px;
-  }
+//   .btnSave {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: flex-end;
+//   }
+// }

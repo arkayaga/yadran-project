@@ -1,15 +1,58 @@
-<div class="container">
-  <div style="float: left; margin-left: 15px">
-    <input id="myInput" type="text" [(ngModel)]="searchedInput" placeholder="Arama" />
-  </div>
+<div class="search-container">
+  <div class="box">
+    <mat-form-field class="search" appearance="outline">
+      <mat-icon matPrefix>search</mat-icon>
 
-  <div>
-    <button class="button" style="float: right; margin-right: 10px" (click)="onNew()">
-      Mekan Ekle
+      <input
+        matInput
+        placeholder="Arama"
+        (keyup)="applyFilter($event)"
+        #input
+      />
+    </mat-form-field>
+
+    <button class="btnNew" mat-fab (click)="onNew()">
+      <mat-icon>add</mat-icon>
     </button>
   </div>
 
-  <div class="container">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Mekan Adi</th>
+      <td mat-cell *matCellDef="let place">
+        {{ place.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="button">
+      <th mat-header-cell *matHeaderCellDef class="islem">Islem</th>
+      <td mat-cell *matCellDef="let place">
+        <button class="btnDelete" mat-raised-button (click)="onDelete(place)">
+          Sil
+        </button>
+        <button class="btnEdit" mat-raised-button (click)="onEdit(place)">
+          Guncelle
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        Sonuc bulunamadi.. "{{ input.value }}"
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page of users"
+  ></mat-paginator>
+</div>
+
+<!-- <div class="container">
     <table id="myTable">
       <tr class="header">
         <th>Mekan Adi</th>
@@ -27,5 +70,4 @@
         </tr>
       </tbody>
     </table>
-  </div>
-</div>
+  </div> -->

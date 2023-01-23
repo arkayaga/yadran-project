@@ -1,11 +1,19 @@
-<div class="container">
-  <div class="topnav">
-    <a routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    <a routerLinkActive="active" routerLink="/place-list">Places</a>
-    <a routerLinkActive="active" routerLink="/organization-cost"
+<mat-toolbar class="topnav">
+  <div class="link">
+    <a
+      mat-button
+      routerLinkActive="active"
+      routerLink="/"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Home</a
+    >
+    <a mat-button routerLinkActive="active" routerLink="/place-list">Places</a>
+    <a mat-button routerLinkActive="active" routerLink="/organization-cost"
       >Organization Costs</a
     >
-
-    <button type="button" class="button" (click)="onLogout()">Logout</button>
   </div>
-</div>
+
+  <button mat-raised-button type="button" class="button" (click)="onLogout()">
+    Logout
+  </button>
+</mat-toolbar>

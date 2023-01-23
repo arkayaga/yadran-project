@@ -1,37 +1,48 @@
-#myInput {
-  background-position: 10px 12px; /* Position the search icon */
-  background-repeat: no-repeat; /* Do not repeat the icon image */
-  width: 100%; /* Full-width */
-  font-size: 16px; /* Increase font-size */
-  padding: 12px 20px 12px 40px; /* Add some padding */
-  border: 1px solid #ddd; /* Add a grey border */
-  margin-bottom: 12px; /* Add some space below the input */
-}
+// .search-container {
+//   display: flex;
+//   flex-direction: column;
+//   //   align-items: center;
+//   //   justify-content: center;
 
-#myTable {
-  border-collapse: collapse; /* Collapse borders */
-  width: 100%; /* Full-width */
-  border: 1px solid #ddd; /* Add a grey border */
-  font-size: 18px; /* Increase font-size */
-}
+//   .box {
+//     display: flex;
+//     justify-content: space-between;
+//     // align-items: center;
+//     margin-left: 15px;
+//     margin-right: 15px;
 
-#myTable th,
-#myTable td {
-  text-align: left; /* Left-align text */
-  padding: 12px; /* Add padding */
-}
+//     .search {
+//       margin-top: 15px;
+//       margin-right: 15px;
+//       width: 90%;
+//     }
 
-#myTable tr {
-  /* Add a bottom border to all table rows */
-  border-bottom: 1px solid #ddd;
-}
+//     .btnNew {
+//       margin-top: 15px;
+//     }
+//   }
 
-#myTable tr.header,
-#myTable tr:hover {
-  /* Add a grey background color to the table header and on hover */
-  background-color: #f1f1f1;
-}
+//   table {
+//     width: 100%;
+//     flex-direction: column;
+//     // justify-content: space-between;
 
-.button{
-  margin-top: 25px;
-}
+//     th {
+//       font-size: large;
+//     }
+
+//     .islem {
+//       display: flex;
+//       height: 57px;
+//       align-items: center;
+//       justify-content: center;
+//     }
+
+//     td {
+//       button {
+//         float: right;
+//         margin: 5px;
+//       }
+//     }
+//   }
+// }

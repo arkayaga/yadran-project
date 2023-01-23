@@ -1,0 +1,31 @@
+<mat-drawer-container>
+  <mat-drawer mode="side" opened>
+    <div class="link">
+      <a
+        mat-button
+        routerLinkActive="active"
+        routerLink="/"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
+      >
+      <a mat-button routerLinkActive="active" routerLink="/place-list"
+        >Places</a
+      >
+      <a mat-button routerLinkActive="active" routerLink="/organization-cost"
+        >Organization Costs</a
+      >
+    </div>
+
+      <button mat-raised-button type="button" class="button" (click)="onLogout()">
+        Logout
+      </button>
+  </mat-drawer>
+
+  <div class="head">
+    <app-header></app-header>
+  </div>
+
+  <div class="main">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>
