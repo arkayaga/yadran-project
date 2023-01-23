@@ -13,6 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatExpansionModule} from '@angular/material/expansion'; 
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatMenuModule,
         MatToolbarModule,
         MatSidenavModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatExpansionModule
     ],
 })
 

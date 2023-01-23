@@ -6,19 +6,33 @@
         routerLinkActive="active"
         routerLink="/"
         [routerLinkActiveOptions]="{ exact: true }"
-        >Home</a
+        >Ana Sayfa</a
       >
-      <a mat-button routerLinkActive="active" routerLink="/place-list"
-        >Places</a
-      >
-      <a mat-button routerLinkActive="active" routerLink="/organization-cost"
-        >Organization Costs</a
-      >
+
+      <mat-accordion>
+        <mat-expansion-panel >
+          <mat-expansion-panel-header>
+            Yonetim Paneli
+          </mat-expansion-panel-header>
+          <mat-action-row>
+            <a mat-button routerLinkActive="active" routerLink="/place-list"
+              >Mekanlar</a
+            >
+
+            <a
+              mat-button
+              routerLinkActive="active"
+              routerLink="/organization-cost"
+              >Organizasyon Gelir Gider</a
+            >
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
 
-      <button mat-raised-button type="button" class="button" (click)="onLogout()">
-        Logout
-      </button>
+    <button mat-raised-button type="button" class="button" (click)="onLogout()">
+      Cikis
+    </button>
   </mat-drawer>
 
   <div class="head">
