@@ -18,7 +18,8 @@ import { SharedModule } from '../shared/shared.module';
     PlaceListRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+
   ],
   exports: [
   ]
