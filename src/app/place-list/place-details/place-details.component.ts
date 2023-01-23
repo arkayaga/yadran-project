@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from 'src/app/shared/messages/alert.service';
+import { AlertService } from '../../shared/messages/alert.service';
 import Swal from 'sweetalert2';
 import { PlaceService } from '../../core/place/place.service';
-
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -19,21 +19,18 @@ export class PlaceDetailsComponent {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private placeService: PlaceService,
     private formBuilder: FormBuilder,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public dialogRef: MatDialogRef<PlaceDetailsComponent>,
+    @Inject(MAT_DIALOG_DATA) private data,
   ) {
     this.initForm();
 
-    this.route.params.subscribe(data => {
-      if (data['id']) {
-        this.id = data['id'];
-        this.getDetail();
-      }
-    });
-
-
+    if(data && data !== 'new') {
+      this.id = data;
+      this.getDetail();
+    }
   }
 
 
@@ -46,7 +43,7 @@ export class PlaceDetailsComponent {
         [Validators.required]
       ],
       profitRate: [null,
-          [Validators.required,
+        [Validators.required,
         Validators.min(0),
         Validators.max(100),
         Validators.pattern("^[0-9-.]*$")]
@@ -85,23 +82,24 @@ export class PlaceDetailsComponent {
             shortName: this.form.get('shortName').value,
             profitRate: this.form.get('profitRate').value
           }
-    
+
           if (!this.id) {
             this.placeService.addPlace(request).subscribe()
-          this.router.navigate(['place-list'])
+            // this.router.navigate(['place-list'])
+            this.dialogRef.close();
 
           }
           else {
             this.placeService.editPlace(request).subscribe(response => {
-              this.router.navigate(['place-list'])
-
+              // this.router.navigate(['place-list'])
+              this.dialogRef.close();
             },
               error => {
                 // console.log(error.error.responseException[0].errorMessage)
                 let errMsg = error.error.responseException.map(x => x.errorMessage);
                 this.alertService.errorMsg(errMsg)
               });
-    
+
           };
         }
         else if (result.isDenied) {
@@ -109,7 +107,7 @@ export class PlaceDetailsComponent {
         }
       });
 
-    } 
+    }
   }
 }
 

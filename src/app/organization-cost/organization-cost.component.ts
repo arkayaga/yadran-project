@@ -1,45 +1,79 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ErrorHandler, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { catchError, tap } from 'rxjs';
-import Swal from 'sweetalert2';
+import { OrganizationCost } from '../core/organization-cost/organization.model';
 import { OrganizationCostService } from '../core/organization-cost/organization-cost.service';
-import { AlertService } from '../shared/messages/alert.service';
+import { CostDetailsComponent } from './cost-details/cost-details.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-organization-cost',
   templateUrl: './organization-cost.component.html',
   styleUrls: ['./organization-cost.component.scss'],
 })
-export class OrganizationCostComponent implements OnInit {
+export class OrganizationCostComponent implements AfterViewInit {
   orgs = [];
-  searchedInput = '';
-  message: any = '';
+  displayedColumns: string[] = ['org', 'button'];
+  dataSource = new MatTableDataSource<OrganizationCost>();
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
 
   constructor(private router: Router,
     private orgService: OrganizationCostService,
-    private alert: AlertService) { }
+    public dialog: MatDialog) {
 
-  ngOnInit(): void {
     this.getOrgs();
+
   }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
 
   getOrgs() {
     this.orgService.getOrganizations()
-      .subscribe(orgs => {
-        this.orgs = orgs.data
-      }
+      .subscribe(
+        orgs => {
+          this.orgs = orgs.data
+          this.dataSource.data = this.orgs;
+
+        }
       )
   }
 
-  onAdd() {
-    this.router.navigate(['organization-cost/new']);
+  onNew() {
+    // this.router.navigate(['organization-cost/new']);
+    const dialogRef = this.dialog.open(CostDetailsComponent)
 
   }
 
   onEdit(org) {
-    console.log('delete :' + org.id)
-    this.router.navigate(['organization-cost/' + org.id])
+    const dialogRef = this.dialog.open(CostDetailsComponent,
+      {
+        width: '40vw',
+        data: org.id
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getOrgs();
+    });
+    // console.log('delete :' + org.id)
+    // this.router.navigate(['organization-cost/' + org.id])
   }
 
   onDelete(org) {
@@ -52,3 +86,5 @@ export class OrganizationCostComponent implements OnInit {
       })
   }
 }
+
+

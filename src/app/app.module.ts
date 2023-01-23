@@ -9,6 +9,8 @@ import { ApiInterceptorService } from './core/api.interceptor.service';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from "./layout/layout.module";
+import {MatNativeDateModule} from '@angular/material/core';
+
 
 @NgModule({
     declarations: [
@@ -27,6 +29,7 @@ import { LayoutModule } from "./layout/layout.module";
         CommonModule,
         HttpClientModule,
         AppRoutingModule,
+        MatNativeDateModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
         ToastrModule.forRoot(),
