@@ -1,38 +1,37 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Place } from '../core/place/place.model';
+import { OrganizationStatus } from '../core/organization-status/organization-status.model';
 import Swal from 'sweetalert2';
-import { PlaceService } from '../core/place/place.service';
-import { PlaceDetailsComponent } from './place-details/place-details.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-
+import { OrganizationStatusService } from '../core/organization-status/organization-status.service';
+import { MatDialog } from '@angular/material/dialog';
+import { StatusDetailsComponent } from './status-details/status-details.component';
 
 @Component({
-  templateUrl: './place-list.component.html',
-  styleUrls: ['./place-list.component.scss']
+  selector: 'app-organization-status',
+  templateUrl: './organization-status.component.html',
+  styleUrls: ['./organization-status.component.scss']
 })
-export class PlaceListComponent implements AfterViewInit {
-  places = [];
+export class OrganizationStatusComponent {
+  orgsType = [];
   displayedColumns: string[] = ['name', 'button'];
-  dataSource = new MatTableDataSource<Place>();
+  dataSource = new MatTableDataSource<OrganizationStatus>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+
   constructor(
-    private placeService: PlaceService,
-    public dialog: MatDialog
-  ) {
-    this.getlist()
+    private orgService: OrganizationStatusService,
+    public dialog: MatDialog) {
+    this.getlist();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -43,37 +42,39 @@ export class PlaceListComponent implements AfterViewInit {
     }
   }
 
-
   getlist() {
-    this.placeService.getPlaces()
+    this.orgService.getOrgsStatus()
       .subscribe(
-        places => {
-          this.places = places.data;
-          this.dataSource.data = this.places;
-        });
+        reses => {
+          this.orgsType = reses.data
+          this.dataSource.data = this.orgsType;
+
+        }
+      )
   }
 
   onNew() {
-    // this.router.navigate(['place-list/new']);
-    const dialogRef = this.dialog.open(PlaceDetailsComponent)
+    const dialogRef = this.dialog.open(StatusDetailsComponent)
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.getlist();
+    }
+    )
   }
 
-
-  onEdit(place) {
-    const dialogRef = this.dialog.open(PlaceDetailsComponent,
+  onEdit(org) {
+    const dialogRef = this.dialog.open(StatusDetailsComponent,
       {
         width: '40vw',
-        data: place.id
+        data: org.id
       });
-    dialogRef.afterClosed().subscribe(result => {
+
+    dialogRef.afterClosed().subscribe(() => {
       this.getlist();
     });
-
-    // console.log(place)
-    // this.router.navigate(['place-list/' + place.id])
   }
 
-  onDelete(place) {
+  onDelete(org) {
     Swal.fire({
       title: 'Silmek istediginize emin misiniz?',
       text: 'Bu islem geri alinamaz!',
@@ -86,18 +87,15 @@ export class PlaceListComponent implements AfterViewInit {
     })
       .then((result) => {
         if (result.isConfirmed) {
-          this.placeService.deletePlace(place.id).subscribe(res => {
-            if (res === place.id) {
-              this.places.splice(place.id, 1);
-            }
+          this.orgService.deleteOrgStatus(org.id).subscribe(res => {
+
             Swal.fire('Silindi!', '', 'success')
             this.getlist()
           });
-        } else if (result.isDenied) {
+        }
+        else {
           Swal.fire('Vazgecildi', '', 'info')
         }
       })
   };
 }
-
-

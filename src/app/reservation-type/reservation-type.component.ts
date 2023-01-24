@@ -1,38 +1,37 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { Place } from '../core/place/place.model';
-import Swal from 'sweetalert2';
-import { PlaceService } from '../core/place/place.service';
-import { PlaceDetailsComponent } from './place-details/place-details.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-
+import { MatTableDataSource } from '@angular/material/table';
+import Swal from 'sweetalert2';
+import { ReservationTypeService } from '../core/reservation-type/reservation-type.service';
+import { Reservation } from '../core/reservation-type/reservation.model';
+import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
 
 @Component({
-  templateUrl: './place-list.component.html',
-  styleUrls: ['./place-list.component.scss']
+  selector: 'app-reservation-type',
+  templateUrl: './reservation-type.component.html',
+  styleUrls: ['./reservation-type.component.scss']
 })
-export class PlaceListComponent implements AfterViewInit {
-  places = [];
+export class ReservationTypeComponent implements AfterViewInit {
+  resesType = [];
   displayedColumns: string[] = ['name', 'button'];
-  dataSource = new MatTableDataSource<Place>();
+  dataSource = new MatTableDataSource<Reservation>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+
   constructor(
-    private placeService: PlaceService,
-    public dialog: MatDialog
-  ) {
-    this.getlist()
+    private resService: ReservationTypeService,
+    public dialog: MatDialog) {
+    this.getlist();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -43,37 +42,37 @@ export class PlaceListComponent implements AfterViewInit {
     }
   }
 
-
   getlist() {
-    this.placeService.getPlaces()
+    this.resService.getResesType()
       .subscribe(
-        places => {
-          this.places = places.data;
-          this.dataSource.data = this.places;
-        });
+        reses => {
+          this.resesType = reses.data
+          this.dataSource.data = this.resesType;
+
+        }
+      )
   }
 
   onNew() {
-    // this.router.navigate(['place-list/new']);
-    const dialogRef = this.dialog.open(PlaceDetailsComponent)
+    const dialogRef = this.dialog.open(ReservationDetailsComponent)
+    dialogRef.afterClosed().subscribe(() => {
+      this.getlist();
+    })
   }
 
-
-  onEdit(place) {
-    const dialogRef = this.dialog.open(PlaceDetailsComponent,
+  onEdit(res) {
+    const dialogRef = this.dialog.open(ReservationDetailsComponent,
       {
         width: '40vw',
-        data: place.id
+        data: res.id
       });
+
     dialogRef.afterClosed().subscribe(result => {
       this.getlist();
     });
-
-    // console.log(place)
-    // this.router.navigate(['place-list/' + place.id])
   }
 
-  onDelete(place) {
+  onDelete(res) {
     Swal.fire({
       title: 'Silmek istediginize emin misiniz?',
       text: 'Bu islem geri alinamaz!',
@@ -86,18 +85,15 @@ export class PlaceListComponent implements AfterViewInit {
     })
       .then((result) => {
         if (result.isConfirmed) {
-          this.placeService.deletePlace(place.id).subscribe(res => {
-            if (res === place.id) {
-              this.places.splice(place.id, 1);
-            }
+          this.resService.deleteResType(res.id).subscribe(res => {
+
             Swal.fire('Silindi!', '', 'success')
             this.getlist()
           });
-        } else if (result.isDenied) {
+        }
+        else {
           Swal.fire('Vazgecildi', '', 'info')
         }
       })
   };
 }
-
-

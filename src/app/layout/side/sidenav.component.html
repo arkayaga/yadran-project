@@ -1,45 +1,24 @@
-<mat-drawer-container>
-  <mat-drawer mode="side" opened>
-    <div class="link">
-      <a
-        mat-button
-        routerLinkActive="active"
-        routerLink="/"
-        [routerLinkActiveOptions]="{ exact: true }"
-        >Ana Sayfa</a
-      >
+<div class="link">
+  <a
+    mat-button
+    routerLinkActive="active"
+    routerLink="/"
+    [routerLinkActiveOptions]="{ exact: true }"
+    >Ana Sayfa</a
+  >
 
-      <mat-accordion>
-        <mat-expansion-panel >
-          <mat-expansion-panel-header>
-            Yonetim Paneli
-          </mat-expansion-panel-header>
-          <mat-action-row>
-            <a mat-button routerLinkActive="active" routerLink="/place-list"
-              >Mekanlar</a
-            >
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header> Yonetim Paneli </mat-expansion-panel-header>
+      <mat-action-row *ngFor="let item of menu">
+        <a mat-button routerLinkActive="active" routerLink="{{ item.url }}">
+          {{ item.name }}
+        </a>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
 
-            <a
-              mat-button
-              routerLinkActive="active"
-              routerLink="/organization-cost"
-              >Organizasyon Gelir Gider</a
-            >
-          </mat-action-row>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
-
-    <button mat-raised-button type="button" class="button" (click)="onLogout()">
-      Cikis
-    </button>
-  </mat-drawer>
-
-  <div class="head">
-    <app-header></app-header>
-  </div>
-
-  <div class="main">
-    <router-outlet></router-outlet>
-  </div>
-</mat-drawer-container>
+<button mat-raised-button type="button" class="button" (click)="onLogout()">
+  Cikis
+</button>

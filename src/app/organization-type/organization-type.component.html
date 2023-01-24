@@ -1,0 +1,53 @@
+<div class="search-container">
+    <div class="box">
+      <mat-form-field class="search" appearance="outline">
+        <mat-icon matPrefix>search</mat-icon>
+  
+        <input
+          matInput
+          placeholder="Arama"
+          (keyup)="applyFilter($event)"
+          #input
+        />
+      </mat-form-field>
+  
+      <button class="btnNew" mat-fab (click)="onNew()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Organizasyon Tipler</th>
+        <td mat-cell *matCellDef="let org">
+          {{ org.name }}
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="button">
+        <th mat-header-cell *matHeaderCellDef class="islem">Islem</th>
+        <td mat-cell *matCellDef="let org">
+          <button class="btnDelete" mat-raised-button (click)="onDelete(org)">
+            Sil
+          </button>
+          <button class="btnEdit" mat-raised-button (click)="onEdit(org)">
+            Guncelle
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          Sonuc bulunamadi.. "{{ input.value }}"
+        </td>
+      </tr>
+    </table>
+  
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page of users"
+    ></mat-paginator>
+  </div>

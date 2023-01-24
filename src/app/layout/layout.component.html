@@ -1,3 +1,15 @@
-<div class="container">
-  <app-sidenav></app-sidenav>
-</div>
+<mat-drawer-container>
+  <mat-drawer mode="side" opened>
+    <app-sidenav></app-sidenav>
+  </mat-drawer>
+
+  <div class="screen">
+    <div class="head">
+      <app-header></app-header>
+    </div>
+
+    <div class="main">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</mat-drawer-container>
