@@ -9,7 +9,6 @@ export class AlertService {
 
   constructor(private toastr: ToastrService) { }
   successMsg(title: string, desc: string) {
-    console.log(title)
     Swal.fire(title, desc,'success');
   }
 

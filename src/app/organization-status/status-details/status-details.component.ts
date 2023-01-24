@@ -63,16 +63,17 @@ export class StatusDetailsComponent {
           }
 
           if (!this.id) {
-            this.orgService.addOrgStatus(request).subscribe()
-            this.dialogRef.close();
+            this.orgService.addOrgStatus(request).subscribe(() => {
+              this.dialogRef.close();
+            });
 
           }
           else {
-            this.orgService.editOrgStatus(request).subscribe(response => {
+            this.orgService.editOrgStatus(request).subscribe(() => {
               this.dialogRef.close();
             },
               error => {
-                let errMsg = error.error.responseException.map(x => x.errorMessage);
+                const errMsg = error.error.responseException.map(x => x.errorMessage);
                 this.alertService.errorMsg(errMsg)
               });
 

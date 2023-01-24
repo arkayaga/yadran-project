@@ -17,6 +17,7 @@ export class OrganizationStatusComponent {
   orgsType = [];
   displayedColumns: string[] = ['name', 'button'];
   dataSource = new MatTableDataSource<OrganizationStatus>();
+  dialogRef;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -48,29 +49,27 @@ export class OrganizationStatusComponent {
         reses => {
           this.orgsType = reses.data
           this.dataSource.data = this.orgsType;
-
         }
       )
   }
 
   onNew() {
-    const dialogRef = this.dialog.open(StatusDetailsComponent)
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.getlist();
-    }
-    )
+    this.dialogRef = this.dialog.open(StatusDetailsComponent)
+    this.dialogRef.afterClosed().subscribe(result => {
+      alert(result)
+      this.getlist()
+    });
   }
 
   onEdit(org) {
-    const dialogRef = this.dialog.open(StatusDetailsComponent,
+    this.dialogRef = this.dialog.open(StatusDetailsComponent,
       {
         width: '40vw',
         data: org.id
       });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getlist();
+    this.dialogRef.afterClosed().subscribe(result => {
+      this.getlist()
     });
   }
 
@@ -87,7 +86,7 @@ export class OrganizationStatusComponent {
     })
       .then((result) => {
         if (result.isConfirmed) {
-          this.orgService.deleteOrgStatus(org.id).subscribe(res => {
+          this.orgService.deleteOrgStatus(org.id).subscribe(() => {
 
             Swal.fire('Silindi!', '', 'success')
             this.getlist()
