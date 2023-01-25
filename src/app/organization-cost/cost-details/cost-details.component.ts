@@ -15,7 +15,7 @@ export class CostDetailsComponent {
   id: string;
 
   constructor(private placeService: PlaceService,
-    private orgService: OrganizationCostService,
+    private costService: OrganizationCostService,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<CostDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) private data,
@@ -51,7 +51,7 @@ export class CostDetailsComponent {
   }
 
   getDetail() {
-    this.orgService.getOrganization(this.id)
+    this.costService.getOrgCost(this.id)
       .subscribe((res: any) => {
         if (!res.isError) {
           this.form.patchValue({
@@ -91,13 +91,13 @@ export class CostDetailsComponent {
     if (this.form.valid) {
 
       if (!this.id) {
-        this.orgService.addOrganization(this.getRequest()).subscribe(() => {
+        this.costService.addOrgCost(this.getRequest()).subscribe(() => {
           // this.router.navigate(['organization-cost'])
           this.dialogRef.close();
         })
       }
       else {
-        this.orgService.editOrganization(this.getRequest()).subscribe(() => {
+        this.costService.editOrgCost(this.getRequest()).subscribe(() => {
           // this.router.navigate(['organization-cost'])
           this.dialogRef.close();
 

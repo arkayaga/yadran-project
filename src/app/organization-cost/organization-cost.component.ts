@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { OrganizationCost } from '../core/organization-cost/organization.model';
+import { OrganizationCost } from '../core/organization-cost/organization-cost.model';
 import { OrganizationCostService } from '../core/organization-cost/organization-cost.service';
 import { CostDetailsComponent } from './cost-details/cost-details.component';
 import { MatPaginator } from '@angular/material/paginator';
@@ -46,7 +46,7 @@ deleteSwal: any;
 
 
   getOrgs() {
-    this.orgService.getOrganizations()
+    this.orgService.getOrgsCost()
       .subscribe(
         orgs => {
           this.orgs = orgs.data
@@ -77,7 +77,7 @@ deleteSwal: any;
   }
 
   onDelete(org) {
-    this.orgService.deleteOrganization(org.id)
+    this.orgService.deleteOrgCost(org.id)
       .subscribe(res => {
         if (res === org.id) {
           this.orgs.splice(org.id, 1)
