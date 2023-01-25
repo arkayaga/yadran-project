@@ -13,23 +13,23 @@ export class OrganizationService {
 
   constructor(private http: HttpClient) { }
 
-  getOrganizations(): Observable<Response<Organization[]>> {
+  getOrgs(): Observable<Response<Organization[]>> {
     return this.http.get<Response<Organization[]>>(this.url)
   }
 
-  addOrganization(value: Organization): Observable<Response<Organization[]>> {
+  addOrg(value: Organization): Observable<Response<Organization[]>> {
     return this.http.post<Response<Organization[]>>(this.url, value)
   }
 
-  getOrganization(id: string): Observable<Response<Organization>> {
+  getOrg(id: string): Observable<Response<Organization>> {
     return this.http.get<Response<Organization>>(this.url + '/' + id)
   }
 
-  editOrganization(value: Organization): Observable<Response<Organization>> {
+  editOrg(value: Organization): Observable<Response<Organization>> {
     return this.http.put<Response<Organization>>(this.url, value)
   }
 
-  deleteOrganization(id: string): Observable<Response<Organization>> {
+  deleteOrg(id: string): Observable<Response<Organization>> {
     return this.http.delete<Response<Organization>>(this.url + '/' + id)
   }
 }

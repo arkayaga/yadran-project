@@ -12,6 +12,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: '', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+      { path: 'organization', loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationModule) },
       { path: 'place-list', loadChildren: () => import('./place-list/place-list.module').then(m => m.PlaceListModule) },
       { path: 'organization-cost', loadChildren: () => import('./organization-cost/organization-cost.module').then(m => m.OrganizationCostModule) },
       { path: 'reservation-type', loadChildren: () => import('./reservation-type/reservation-type.module').then(m => m.ReservationTypeModule) },
@@ -20,7 +21,6 @@ const routes: Routes = [
 
     ]
   },
-  { path: 'organization', loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationModule) },
   { path: '**', redirectTo: '' }
 
 ];
