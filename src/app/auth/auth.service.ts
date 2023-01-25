@@ -33,7 +33,6 @@ export class AuthService {
       request)
       .pipe(
         tap(res => {
-          console.log(res)
           const user = {
             username: res.data.username,
             id: res.data.id
@@ -71,7 +70,5 @@ export class AuthService {
 }
 
 
-//handleUser olustur
-//handleToken
 
 
