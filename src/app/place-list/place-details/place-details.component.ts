@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../shared/messages/alert.service';
 import Swal from 'sweetalert2';
 import { PlaceService } from '../../core/place/place.service';
@@ -18,7 +17,6 @@ export class PlaceDetailsComponent {
   id: string;
 
   constructor(
-    private router: Router,
     private placeService: PlaceService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
@@ -27,7 +25,7 @@ export class PlaceDetailsComponent {
   ) {
     this.initForm();
 
-    if(data && data !== 'new') {
+    if(this.data && data !== 'new') {
       this.id = data;
       this.getDetail();
     }
@@ -90,13 +88,13 @@ export class PlaceDetailsComponent {
 
           }
           else {
-            this.placeService.editPlace(request).subscribe(response => {
+            this.placeService.editPlace(request).subscribe(() => {
               // this.router.navigate(['place-list'])
               this.dialogRef.close();
             },
               error => {
                 // console.log(error.error.responseException[0].errorMessage)
-                let errMsg = error.error.responseException.map(x => x.errorMessage);
+                const errMsg = error.error.responseException.map(x => x.errorMessage);
                 this.alertService.errorMsg(errMsg)
               });
 

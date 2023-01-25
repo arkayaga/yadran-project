@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { OrganizationCost } from '../core/organization-cost/organization.model';
 import { OrganizationCostService } from '../core/organization-cost/organization-cost.service';
 import { CostDetailsComponent } from './cost-details/cost-details.component';
@@ -20,9 +19,10 @@ export class OrganizationCostComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+deleteSwal: any;
 
 
-  constructor(private router: Router,
+  constructor(
     private orgService: OrganizationCostService,
     public dialog: MatDialog) {
 
@@ -58,7 +58,7 @@ export class OrganizationCostComponent implements AfterViewInit {
 
   onNew() {
     // this.router.navigate(['organization-cost/new']);
-    const dialogRef = this.dialog.open(CostDetailsComponent)
+    this.dialog.open(CostDetailsComponent)
 
   }
 
@@ -69,7 +69,7 @@ export class OrganizationCostComponent implements AfterViewInit {
         data: org.id
       });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.getOrgs();
     });
     // console.log('delete :' + org.id)

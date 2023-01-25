@@ -68,7 +68,7 @@ export class OrganizationStatusComponent {
         data: org.id
       });
 
-    this.dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(() => {
       this.getlist()
     });
   }

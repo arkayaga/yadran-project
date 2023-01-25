@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationCostService } from '../../core/organization-cost/organization-cost.service';
 import { PlaceService } from '../../core/place/place.service';
 
@@ -17,8 +16,6 @@ export class CostDetailsComponent {
 
   constructor(private placeService: PlaceService,
     private orgService: OrganizationCostService,
-    private router: Router,
-    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<CostDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) private data,
@@ -27,7 +24,7 @@ export class CostDetailsComponent {
     this.initForm();
     this.selectPlaces();
 
-    if (data && data !== 'new') {
+    if (this.data && data !== 'new') {
       this.id = data;
       this.getDetail();
     }
@@ -56,7 +53,6 @@ export class CostDetailsComponent {
   getDetail() {
     this.orgService.getOrganization(this.id)
       .subscribe((res: any) => {
-        console.log(res)
         if (!res.isError) {
           this.form.patchValue({
             name: res.data.name,
@@ -88,7 +84,7 @@ export class CostDetailsComponent {
 
 
   onSave() {
-    const value = this.form.value;
+    // const value = this.form.value;
     // console.log(value);
 
     this.form.markAllAsTouched();

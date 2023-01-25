@@ -55,7 +55,7 @@ export class PlaceListComponent implements AfterViewInit {
 
   onNew() {
     // this.router.navigate(['place-list/new']);
-    const dialogRef = this.dialog.open(PlaceDetailsComponent)
+    this.dialog.open(PlaceDetailsComponent)
   }
 
 
@@ -65,7 +65,7 @@ export class PlaceListComponent implements AfterViewInit {
         width: '40vw',
         data: place.id
       });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.getlist();
     });
 

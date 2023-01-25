@@ -67,7 +67,7 @@ export class ReservationTypeComponent implements AfterViewInit {
         data: res.id
       });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.getlist();
     });
   }
@@ -85,7 +85,7 @@ export class ReservationTypeComponent implements AfterViewInit {
     })
       .then((result) => {
         if (result.isConfirmed) {
-          this.resService.deleteResType(res.id).subscribe(res => {
+          this.resService.deleteResType(res.id).subscribe(() => {
 
             Swal.fire('Silindi!', '', 'success')
             this.getlist()

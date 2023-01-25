@@ -87,7 +87,7 @@ export class OrganizationTypeComponent {
     })
       .then((result) => {
         if (result.isConfirmed) {
-          this.orgService.deleteOrgType(org.id).subscribe(res => {
+          this.orgService.deleteOrgType(org.id).subscribe(() => {
 
             Swal.fire('Silindi!', '', 'success')
             this.getlist()

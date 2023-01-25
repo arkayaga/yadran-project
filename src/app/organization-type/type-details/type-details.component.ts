@@ -23,7 +23,7 @@ export class TypeDetailsComponent {
   ) {
 
     this.initForm();
-    if (data && data !== 'new') {
+    if (this.data && data !== 'new') {
       this.id = data;
       this.getDetail();
     }
@@ -68,11 +68,11 @@ export class TypeDetailsComponent {
 
           }
           else {
-            this.orgService.editOrgType(request).subscribe(response => {
+            this.orgService.editOrgType(request).subscribe(() => {
               this.dialogRef.close();
             },
               error => {
-                let errMsg = error.error.responseException.map(x => x.errorMessage);
+                const errMsg = error.error.responseException.map(x => x.errorMessage);
                 this.alertService.errorMsg(errMsg)
               });
 

@@ -23,7 +23,7 @@ export class StatusDetailsComponent {
   ) {
 
     this.initForm();
-    if (data && data !== 'new') {
+    if (this.data && data !== 'new') {
       this.id = data;
       this.getDetail();
     }

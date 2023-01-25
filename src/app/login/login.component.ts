@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 
@@ -16,7 +15,6 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private http: HttpClient,
     private formBuilder: FormBuilder,
     private router: Router) {
 
@@ -34,7 +32,6 @@ export class LoginComponent {
 
 
   onSubmit() {
-    console.log(this.form);
     if (!this.form.valid) {
       return;
     }
@@ -44,8 +41,7 @@ export class LoginComponent {
       password: this.form.get('password')?.value,
     }
 
-    this.authService.login(request).subscribe(response => {
-      console.log(response)
+    this.authService.login(request).subscribe(() => {
       this.router.navigate(['/home']);
     });
   }
