@@ -47,7 +47,6 @@ export class CostDetailsComponent {
       isActive: [false, [Validators.required]],
       placeId: [null, [Validators.required]]
     });
-
   }
 
   getDetail() {
@@ -114,6 +113,4 @@ export class CostDetailsComponent {
       }
     );
   }
-
-
 }

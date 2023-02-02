@@ -19,7 +19,7 @@ export class OrganizationCostComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-deleteSwal: any;
+  deleteSwal: any;
 
 
   constructor(

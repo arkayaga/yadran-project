@@ -5,8 +5,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { OrganizationService } from '../core/organization/organization.service';
 import Swal from 'sweetalert2';
 import { Organization } from '../core/organization/organization.model';
-import { OrganizationDetailsComponent } from './organization-details/organization-details.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { OrganizationStatusService } from '../core/organization-status/organization-status.service';
 
 @Component({
   selector: 'app-organization',
@@ -21,7 +22,8 @@ export class OrganizationComponent {
     'orgStatus',
     'contractDate',
     'contactPFN',
-    'customerMP'
+    'customerMP',
+    'button'
   ];
   dataSource = new MatTableDataSource<Organization>();
 
@@ -29,40 +31,49 @@ export class OrganizationComponent {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
+    private router: Router,
     private orgService: OrganizationService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private orgStatusService: OrganizationStatusService
   ) {
     this.getlist();
+    this.getOrgStatus();
   }
 
   table = [
-    { columnDef: 'org', header: 'Organizasyon', cellDef: 'code' },
+    { columnDef: 'org', header: 'Organizasyon', cellDef: 'code', type: "text" },
     {
       columnDef: 'orgSD',
       header: 'Organizasyon Tarihi',
       cellDef: 'organizationStartDate',
+      type: 'date'
     },
     {
       columnDef: 'orgStatus',
       header: 'Org. Durumu',
-      cellDef: 'organizationStatus[1]',
+      cellDef: 'status ',
+      type: 'text'
     },
     {
       columnDef: 'contractDate',
       header: 'Sözleşme Tarihi',
       cellDef: 'contractDate',
+      type: 'date'
     },
     {
       columnDef: 'contactPFN',
       header: 'Müşteri',
       cellDef: 'contactPersonFullName',
+      type: 'text'
     },
     {
       columnDef: 'customerMP',
       header: 'Müşteri Telefonu',
       cellDef: 'customerMobilePhone',
-    },
+      type: 'text'
+    }
   ];
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -87,22 +98,13 @@ export class OrganizationComponent {
   }
 
   onNew() {
-    const dialogRef = this.dialog.open(OrganizationDetailsComponent);
+    this.router.navigate(['organization/new']);
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getlist();
-    });
   }
 
   onEdit(org) {
-    const dialogRef = this.dialog.open(OrganizationDetailsComponent, {
-      width: '40vw',
-      data: org.id,
-    });
+    this.router.navigate(['organization/' + org.id])
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getlist();
-    });
   }
 
   onDelete(org) {
@@ -125,5 +127,15 @@ export class OrganizationComponent {
         Swal.fire('Vazgecildi', '', 'info');
       }
     });
+  }
+
+  getOrgStatus() {
+
+    this.orgStatusService.getOrgsStatus().subscribe(
+      (res) => {
+        // tslint:disable-next-line:no-console
+        console.log(res.data[3].name)
+      }
+    )
   }
 }
