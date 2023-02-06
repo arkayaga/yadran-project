@@ -33,4 +33,8 @@ export class OrganizationCostService {
     return this.http.delete<Response<OrganizationCost>>(this.url + '/' + id)
   }
 
+  getOrgCostActive(id: string): Observable<Response<OrganizationCost>> {
+    return this.http.get<Response<OrganizationCost>>(this.url + '/Actives/' + id)
+  }
+
 }

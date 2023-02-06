@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { OrganizationTypeService } from '../../core/organization-type/organization-type.service';
 import { OrganizationStatusService } from '../../core/organization-status/organization-status.service';
@@ -7,6 +7,7 @@ import { ReservationTypeService } from '../../core/reservation-type/reservation-
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationService } from '../../core/organization/organization.service';
 import { OrganizationCostService } from '../../core/organization-cost/organization-cost.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-organization-details',
@@ -21,8 +22,9 @@ export class OrganizationDetailsComponent {
   orgsType = [];
   reses = [];
   costs = [];
+  placeId: string;
   date1 = new FormControl(new Date())
-  time = ['00:00', '06:00', '12:00', '15:00', '18:00', '21:00']
+  time = ['00:00', '06:00', '12:00', '15:00', '18:00', '21:00'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,14 +35,16 @@ export class OrganizationDetailsComponent {
     private orgService: OrganizationService,
     private costService: OrganizationCostService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public dialogRef: MatDialogRef<OrganizationDetailsComponent>,
+    @Inject(MAT_DIALOG_DATA) private value,
   ) {
     this.initForm();
     this.selectPlaces();
     this.selectOrgsStatus();
     this.selectOrgsType();
     this.selectReses();
-    this.selectCosts();
+    // this.selectCosts();
 
     this.route.params.subscribe(data => {
       // tslint:disable-next-line:no-string-literal
@@ -50,6 +54,16 @@ export class OrganizationDetailsComponent {
         this.getDetail();
       }
     })
+
+    if (this.value && value !== 'new') {
+      this.id = value;
+      this.getDetail();
+    }
+
+    this.form.get('placeId').valueChanges.subscribe(i => {
+      this.getPlaceId(i);
+    });
+
   }
 
   initForm() {
@@ -80,7 +94,7 @@ export class OrganizationDetailsComponent {
       paymentNote: [null],
       contractAmount: [null],
       downPayment: [null],
-
+      organizationOrganizationCostRecipes: [null],
 
 
       // cost: [null, [Validators.required, Validators.pattern("^[0-9]*$")]],
@@ -103,7 +117,7 @@ export class OrganizationDetailsComponent {
             organizationStartDate: res.data.organizationStartDate,
             organizationEndDate: res.data.organizationEndDate,
             plannedPeopleNumber: res.data.plannedPeopleNumber,
-            // realizedPeopleNumber: res.data.realizedPeopleNumber,
+            realizedPeopleNumber: res.data.realizedPeopleNumber,
             // managingUser: res.data.managingUser,
             identityNumber: res.data.identityNumber,
             customerFullName: res.data.customerFullName,
@@ -131,13 +145,18 @@ export class OrganizationDetailsComponent {
     const request = {
       id: this.id,
       placeId: value?.placeId,
+      place: value?.place,
       organizationStatusId: value?.organizationStatusId,
+      organizationType: value?.organizationType,
       organizationTypeId: value?.organizationTypeId,
       organizationDate: value?.organizationDate,
       reservationTypeId: value?.reservationTypeId,
       organizationStartDate: value?.organizationStartDate,
       organizationEndDate: value?.organizationEndDate,
       plannedPeopleNumber: value?.plannedPeopleNumber,
+      realizedPeopleNumber: value?.plannedPeopleNumber,
+      managingUser: value?.managingUser,
+      managingUserId: value?.managingUserId,
       identityNumber: value?.identityNumber,
       customerFullName: value?.customerFullName,
       customerMobilePhone: value?.customerMobilePhone,
@@ -155,6 +174,15 @@ export class OrganizationDetailsComponent {
       contractAmount: value?.contractAmount,
       downPayment: value?.downPayment,
       organizationOrganizationCostRecipes: value?.organizationOrganizationCostRecipes,
+      costRecipeReports: value?.costRecipeReports,
+      organizationTransactions: value?.organizationTransactions,
+      contractTextId: value?.contractTextId,
+      updatedAt: value?.updatedAt,
+      createdAt: value?.createdAt,
+      code: value?.code,
+      income: value?.income,
+      expense: value?.expense,
+      profit: value?.profit,
     }
 
     return request;
@@ -210,9 +238,23 @@ export class OrganizationDetailsComponent {
     );
   }
 
-  selectCosts() {
-    this.costService.getOrgsCost().subscribe(
-      costs => {
+  // selectCosts() {
+  //   this.costService.getOrgCostActive(this.placeId).subscribe(
+  //     (costs: any) => {
+  //       // tslint:disable-next-line:no-console
+  //       console.log(costs)
+  //       this.costs = costs.data
+  //     }
+  //   );
+  // }
+
+  getPlaceId(placeId) {
+    // tslint:disable-next-line:no-console
+    console.log('Place Id:', placeId);
+    this.costService.getOrgCostActive(placeId).subscribe(
+      (costs: any) => {
+        // tslint:disable-next-line:no-console
+        console.log(costs)
         this.costs = costs.data
       }
     );

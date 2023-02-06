@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { Organization } from '../core/organization/organization.model';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { OrganizationStatusService } from '../core/organization-status/organization-status.service';
+import { OrganizationDetailsComponent } from './organization-details/organization-details.component';
 
 @Component({
   selector: 'app-organization',
@@ -34,10 +34,8 @@ export class OrganizationComponent {
     private router: Router,
     private orgService: OrganizationService,
     public dialog: MatDialog,
-    private orgStatusService: OrganizationStatusService
   ) {
     this.getlist();
-    this.getOrgStatus();
   }
 
   table = [
@@ -93,7 +91,6 @@ export class OrganizationComponent {
     this.orgService.getOrgs().subscribe((reses) => {
       this.orgs = reses.data;
       this.dataSource.data = this.orgs;
-      // this.displayedColumns = Object.keys(this.dataSource[0])
     });
   }
 
@@ -129,13 +126,9 @@ export class OrganizationComponent {
     });
   }
 
-  getOrgStatus() {
-
-    this.orgStatusService.getOrgsStatus().subscribe(
-      (res) => {
-        // tslint:disable-next-line:no-console
-        console.log(res.data[3].name)
-      }
-    )
+  openDialog(org) {
+    this.dialog.open(OrganizationDetailsComponent, {
+        data: org.id
+    })
   }
 }
