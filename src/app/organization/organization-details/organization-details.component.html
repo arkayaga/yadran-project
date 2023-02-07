@@ -2,7 +2,7 @@
   <div class="form-group">
     <mat-form-field class="form-element">
       <mat-label>Salon / Mekan Adi</mat-label>
-      <mat-select formControlName="placeId" required >
+      <mat-select formControlName="placeId" required>
         <mat-option *ngFor="let place of places" [value]="place.id">
           {{ place.name }}
         </mat-option>
@@ -60,7 +60,7 @@
         [matDatepicker]="picker3"
         matInput
         required
-        formControlName="organizationDate"
+        formControlName="organizationStartDate"
       />
       <mat-datepicker-toggle matIconSuffix [for]="picker3">
       </mat-datepicker-toggle>
@@ -80,7 +80,7 @@
       <mat-label>Baslama Saati</mat-label>
       <mat-select formControlName="organizationStartDate" required>
         <mat-option *ngFor="let index of time" [value]="index">
-          {{ index }}
+          {{ index | date :'hh:mm'}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -89,7 +89,7 @@
       <mat-label>Bitis Saati</mat-label>
       <mat-select formControlName="organizationEndDate" required>
         <mat-option *ngFor="let index of time" [value]="index">
-          {{ index }}
+          {{ index | date :'hh:mm'}}
         </mat-option>
       </mat-select>
     </mat-form-field>

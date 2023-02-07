@@ -6,10 +6,14 @@ import { OrganizationComponent } from './organization.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { OrganizationDetailsComponent } from './organization-details/organization-details.component';
+import { DetailsModalComponent } from './organization-details/details-modal/details-modal.component';
+import { DetailsRouteComponent } from './organization-details/details-route/details-route.component';
 @NgModule({
   declarations: [
     OrganizationComponent,
-    OrganizationDetailsComponent
+    OrganizationDetailsComponent,
+    DetailsModalComponent,
+    DetailsRouteComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +23,9 @@ import { OrganizationDetailsComponent } from './organization-details/organizatio
     SharedModule,
   ],
   exports: [
-    OrganizationDetailsComponent
+    OrganizationDetailsComponent,
+    DetailsModalComponent,
+    DetailsRouteComponent
   ]
 })
 export class OrganizationModule { }

@@ -7,7 +7,8 @@ import Swal from 'sweetalert2';
 import { Organization } from '../core/organization/organization.model';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { OrganizationDetailsComponent } from './organization-details/organization-details.component';
+// import { OrganizationDetailsComponent } from './organization-details/organization-details.component';
+import { DetailsModalComponent } from './organization-details/details-modal/details-modal.component';
 
 @Component({
   selector: 'app-organization',
@@ -127,8 +128,8 @@ export class OrganizationComponent {
   }
 
   openDialog(org) {
-    this.dialog.open(OrganizationDetailsComponent, {
-        data: org.id
+    this.dialog.open(DetailsModalComponent, {
+      data: org.id
     })
   }
 }
