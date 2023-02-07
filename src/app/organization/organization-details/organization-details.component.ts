@@ -1,13 +1,15 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { OrganizationTypeService } from '../../core/organization-type/organization-type.service';
 import { OrganizationStatusService } from '../../core/organization-status/organization-status.service';
 import { PlaceService } from '../../core/place/place.service';
 import { ReservationTypeService } from '../../core/reservation-type/reservation-type.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { OrganizationService } from '../../core/organization/organization.service';
 import { OrganizationCostService } from '../../core/organization-cost/organization-cost.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as moment from 'moment';
+// import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-organization-details',
@@ -16,7 +18,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class OrganizationDetailsComponent {
   form: FormGroup;
-  id: string;
   places = [];
   orgsStatus = [];
   orgsType = [];
@@ -24,7 +25,18 @@ export class OrganizationDetailsComponent {
   costs = [];
   placeId: string;
   date1 = new FormControl(new Date())
-  time = ['00:00', '06:00', '12:00', '15:00', '18:00', '21:00'];
+  time = [];
+
+  @Input()
+  get organization() { return this._organization; }
+  set organization(organization: any) {
+    this._organization = organization;
+
+    if (organization) {
+      this.setForm();
+    }
+  }
+  private _organization;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,36 +46,30 @@ export class OrganizationDetailsComponent {
     private resService: ReservationTypeService,
     private orgService: OrganizationService,
     private costService: OrganizationCostService,
-    private route: ActivatedRoute,
     private router: Router,
-    public dialogRef: MatDialogRef<OrganizationDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) private value,
   ) {
     this.initForm();
     this.selectPlaces();
     this.selectOrgsStatus();
     this.selectOrgsType();
     this.selectReses();
-    // this.selectCosts();
-
-    this.route.params.subscribe(data => {
-      // tslint:disable-next-line:no-string-literal
-      if (data['id']) {
-        // tslint:disable-next-line:no-string-literal
-        this.id = data['id'];
-        this.getDetail();
-      }
-    })
-
-    if (this.value && value !== 'new') {
-      this.id = value;
-      this.getDetail();
-    }
+    this.createTime();
 
     this.form.get('placeId').valueChanges.subscribe(i => {
       this.getPlaceId(i);
     });
 
+  }
+
+  createTime() {
+    this.time = Array.from({
+      length: 48
+    }, (_, hour) => moment({
+      hour: Math.floor(hour / 2),
+      minutes: (hour % 2 === 0 ? 0 : 30)
+    })
+    );
+    moment(this.time.toString(), "LT").format('HH:mm');
   }
 
   initForm() {
@@ -73,7 +79,6 @@ export class OrganizationDetailsComponent {
       organizationTypeId: [null, [Validators.required]],
       transactionDate: { disabled: true, value: null },
       contractDate: [null],
-      organizationDate: [null, [Validators.required]],
       reservationTypeId: [null],
       organizationStartDate: [null, [Validators.required]],
       organizationEndDate: [null, [Validators.required]],
@@ -102,54 +107,47 @@ export class OrganizationDetailsComponent {
     });
   }
 
-  getDetail() {
-    this.orgService.getOrg(this.id)
-      .subscribe((res: any) => {
-        if (!res.isError) {
-          this.form.patchValue({
-            placeId: res.data.placeId,
-            organizationStatusId: res.data.organizationStatusId,
-            organizationTypeId: res.data.organizationTypeId,
-            transactionDate: res.data.transactionDate,
-            contractDate: res.data.contractDate,
-            organizationDate: res.data.organizationDate,
-            reservationTypeId: res.data.reservationTypeId,
-            organizationStartDate: res.data.organizationStartDate,
-            organizationEndDate: res.data.organizationEndDate,
-            plannedPeopleNumber: res.data.plannedPeopleNumber,
-            realizedPeopleNumber: res.data.realizedPeopleNumber,
-            // managingUser: res.data.managingUser,
-            identityNumber: res.data.identityNumber,
-            customerFullName: res.data.customerFullName,
-            customerMobilePhone: res.data.customerMobilePhone,
-            emailAddress: res.data.emailAddress,
-            contactPersonFullName: res.data.contactPersonFullName,
-            contactPersonMobilePhone: res.data.contactPersonMobilePhone,
-            address: res.data.address,
-            notes: res.data.notes,
-            treats: res.data.treats,
-            technicalEquipment: res.data.technicalEquipment,
-            specialRequests: res.data.specialRequests,
-            paymentNote: res.data.paymentNote,
-            contractAmount: res.data.contractAmount,
-            downPayment: res.data.downPayment,
-            organizationOrganizationCostRecipes: res.data.organizationOrganizationCostRecipes.map(item => item.organizationCostRecipeId),
-          });
-        }
-      });
+  setForm() {
+    this.form.patchValue({
+      placeId: this.organization.placeId,
+      organizationStatusId: this.organization.organizationStatusId,
+      organizationTypeId: this.organization.organizationTypeId,
+      transactionDate: this.organization.transactionDate,
+      contractDate: this.organization.contractDate,
+      reservationTypeId: this.organization.reservationTypeId,
+      organizationStartDate: this.organization.organizationStartDate,
+      organizationEndDate: this.organization.organizationEndDate,
+      plannedPeopleNumber: this.organization.plannedPeopleNumber,
+      realizedPeopleNumber: this.organization.realizedPeopleNumber,
+      // managingUser: this.organization.managingUser,
+      identityNumber: this.organization.identityNumber,
+      customerFullName: this.organization.customerFullName,
+      customerMobilePhone: this.organization.customerMobilePhone,
+      emailAddress: this.organization.emailAddress,
+      contactPersonFullName: this.organization.contactPersonFullName,
+      contactPersonMobilePhone: this.organization.contactPersonMobilePhone,
+      address: this.organization.address,
+      notes: this.organization.notes,
+      treats: this.organization.treats,
+      technicalEquipment: this.organization.technicalEquipment,
+      specialRequests: this.organization.specialRequests,
+      paymentNote: this.organization.paymentNote,
+      contractAmount: this.organization.contractAmount,
+      downPayment: this.organization.downPayment,
+      organizationOrganizationCostRecipes: this.organization.organizationOrganizationCostRecipes.map(item => item.organizationCostRecipeId),
+    });
   }
 
   getRequest() {
     const value = this.form.value;
 
     const request = {
-      id: this.id,
+      id: this.organization ? this.organization.id : null,
       placeId: value?.placeId,
       place: value?.place,
       organizationStatusId: value?.organizationStatusId,
       organizationType: value?.organizationType,
       organizationTypeId: value?.organizationTypeId,
-      organizationDate: value?.organizationDate,
       reservationTypeId: value?.reservationTypeId,
       organizationStartDate: value?.organizationStartDate,
       organizationEndDate: value?.organizationEndDate,
@@ -192,13 +190,12 @@ export class OrganizationDetailsComponent {
     this.form.markAllAsTouched();
     if (this.form.valid) {
 
-      if (!this.id) {
-        this.orgService.addOrg(this.getRequest()).subscribe(() => {
+      if (this.organization) {
+        this.orgService.editOrg(this.getRequest()).subscribe(() => {
           this.router.navigate(['organization'])
         })
-      }
-      else {
-        this.orgService.editOrg(this.getRequest()).subscribe(() => {
+      } else {
+        this.orgService.addOrg(this.getRequest()).subscribe(() => {
           this.router.navigate(['organization'])
 
         })
