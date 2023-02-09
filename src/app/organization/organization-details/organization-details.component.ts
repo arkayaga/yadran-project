@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { OrganizationService } from '../../core/organization/organization.service';
 import { OrganizationCostService } from '../../core/organization-cost/organization-cost.service';
 import * as moment from 'moment';
+import { AuthService } from '../../auth/auth.service';
 // import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
@@ -18,6 +19,7 @@ import * as moment from 'moment';
 })
 export class OrganizationDetailsComponent {
   form: FormGroup;
+  user: any
   places = [];
   orgsStatus = [];
   orgsType = [];
@@ -47,6 +49,7 @@ export class OrganizationDetailsComponent {
     private orgService: OrganizationService,
     private costService: OrganizationCostService,
     private router: Router,
+    private auth: AuthService
   ) {
     this.initForm();
     this.selectPlaces();
@@ -54,6 +57,7 @@ export class OrganizationDetailsComponent {
     this.selectOrgsType();
     this.selectReses();
     this.createTime();
+    // this.getUsername();
 
     this.form.get('placeId').valueChanges.subscribe(i => {
       this.getPlaceId(i);
@@ -69,8 +73,11 @@ export class OrganizationDetailsComponent {
       minutes: (hour % 2 === 0 ? 0 : 30)
     })
     );
-    moment(this.time.toString(), "LT").format('HH:mm');
+    // moment.parseZone(this.time).utcOffset();
+    // moment().utcOffset();
+    // moment(this.time.toString(), "LT").format('HH:mm');
   }
+
 
   initForm() {
     this.form = this.formBuilder.group({
@@ -84,7 +91,7 @@ export class OrganizationDetailsComponent {
       organizationEndDate: [null, [Validators.required]],
       plannedPeopleNumber: [null, [Validators.required]],
       realizedPeopleNumber: [null],
-      managingUser: ['admin'],
+      managingUser: [this.getUser()],
       identityNumber: [null, [Validators.required]],
       customerFullName: [null, [Validators.required]],
       customerMobilePhone: [null, [Validators.required]],
@@ -119,7 +126,8 @@ export class OrganizationDetailsComponent {
       organizationEndDate: this.organization.organizationEndDate,
       plannedPeopleNumber: this.organization.plannedPeopleNumber,
       realizedPeopleNumber: this.organization.realizedPeopleNumber,
-      // managingUser: this.organization.managingUser,
+      managingUser: this.organization.managingUser,
+      // managingUserId: this.organization.managingUser.id,
       identityNumber: this.organization.identityNumber,
       customerFullName: this.organization.customerFullName,
       customerMobilePhone: this.organization.customerMobilePhone,
@@ -134,7 +142,11 @@ export class OrganizationDetailsComponent {
       paymentNote: this.organization.paymentNote,
       contractAmount: this.organization.contractAmount,
       downPayment: this.organization.downPayment,
-      organizationOrganizationCostRecipes: this.organization.organizationOrganizationCostRecipes.map(item => item.organizationCostRecipeId),
+      contractTextId: this.organization.contractTextId,
+      income: this.organization.income,
+      expense: this.organization.expense,
+      organizationOrganizationCostRecipes: this.organization.organizationOrganizationCostRecipes.map(
+        item => item.organizationCostRecipeId),
     });
   }
 
@@ -154,7 +166,7 @@ export class OrganizationDetailsComponent {
       plannedPeopleNumber: value?.plannedPeopleNumber,
       realizedPeopleNumber: value?.plannedPeopleNumber,
       managingUser: value?.managingUser,
-      managingUserId: value?.managingUserId,
+      managingUserId: value?.managingUser.id,
       identityNumber: value?.identityNumber,
       customerFullName: value?.customerFullName,
       customerMobilePhone: value?.customerMobilePhone,
@@ -255,5 +267,11 @@ export class OrganizationDetailsComponent {
         this.costs = costs.data
       }
     );
+  }
+
+  getUser() {
+    this.auth.getUser().subscribe(user => {
+      this.user = user
+    });
   }
 }

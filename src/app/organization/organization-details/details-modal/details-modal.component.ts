@@ -10,12 +10,13 @@ import { OrganizationService } from '../../../core/organization/organization.ser
 })
 export class DetailsModalComponent {
   organization: Organization
+  code: string
   constructor(
     private orgService: OrganizationService,
     public dialogRef: MatDialogRef<DetailsModalComponent>,
     @Inject(MAT_DIALOG_DATA) private data,
   ) {
-    if(this.data) {
+    if (this.data) {
       this.getDetail();
     }
   }
@@ -26,7 +27,7 @@ export class DetailsModalComponent {
         // tslint:disable-next-line:no-console
         console.log(res)
         if (!res.isError) {
-           this.organization = res.data;
+          this.organization = res.data;
         }
       });
   }

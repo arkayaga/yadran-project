@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 // import { OrganizationDetailsComponent } from './organization-details/organization-details.component';
 import { DetailsModalComponent } from './organization-details/details-modal/details-modal.component';
+import { OrganizationStatusService } from '../core/organization-status/organization-status.service';
 
 @Component({
   selector: 'app-organization',
@@ -17,6 +18,7 @@ import { DetailsModalComponent } from './organization-details/details-modal/deta
 })
 export class OrganizationComponent {
   orgs = [];
+  status = [];
   displayedColumns: string[] = [
     'org',
     'orgSD',
@@ -34,6 +36,7 @@ export class OrganizationComponent {
   constructor(
     private router: Router,
     private orgService: OrganizationService,
+    private orgStatus: OrganizationStatusService,
     public dialog: MatDialog,
   ) {
     this.getlist();
@@ -50,7 +53,7 @@ export class OrganizationComponent {
     {
       columnDef: 'orgStatus',
       header: 'Org. Durumu',
-      cellDef: 'status ',
+      cellDef: 'organizationStatus',
       type: 'text'
     },
     {
@@ -92,7 +95,14 @@ export class OrganizationComponent {
     this.orgService.getOrgs().subscribe((reses) => {
       this.orgs = reses.data;
       this.dataSource.data = this.orgs;
+      this.getStatus()
     });
+  }
+
+  getStatus() {
+    this.orgStatus.getOrgsStatus().subscribe(status => {
+      this.status = status.data
+    })
   }
 
   onNew() {
