@@ -1,221 +1,234 @@
 <form [formGroup]="form" (ngSubmit)="onSave()">
-  <div class="form-group">
-    <mat-form-field class="form-element">
-      <mat-label>Salon / Mekan Adi</mat-label>
-      <mat-select formControlName="placeId" required>
-        <mat-option *ngFor="let place of places" [value]="place.id">
-          {{ place.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  <div class="form">
+    <div class="form-group">
+      <mat-form-field class="form-element">
+        <mat-label>Salon / Mekan Adi</mat-label>
+        <mat-select formControlName="placeId" required>
+          <mat-option *ngFor="let place of places" [value]="place.id">
+            {{ place.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Organizasyon Durumu</mat-label>
-      <mat-select formControlName="organizationStatusId" required>
-        <mat-option *ngFor="let status of orgsStatus" [value]="status.id">
-          {{ status.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Organizasyon Durumu</mat-label>
+        <mat-select formControlName="organizationStatusId" required>
+          <mat-option *ngFor="let status of orgsStatus" [value]="status.id">
+            {{ status.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Organizasyon Tipi</mat-label>
+      <mat-form-field class="form-element">
+        <mat-label>Organizasyon Tipi</mat-label>
+        <mat-select formControlName="organizationTypeId" required>
+          <mat-option *ngFor="let type of orgsType" [value]="type.id">
+            {{ type.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-      <mat-select formControlName="organizationTypeId" required>
-        <mat-option *ngFor="let type of orgsType" [value]="type.id">
-          {{ type.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Islem Tarihi</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          readonly
+          formControlName="transactionDate"
+          [formControl]="date1"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="picker1">
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker1 disabled="true"></mat-datepicker>
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Islem Tarihi</mat-label>
-      <input
-        matInput
-        [matDatepicker]="picker1"
-        readonly
-        formControlName="transactionDate"
-        [formControl]="date1"
-      />
-      <mat-datepicker-toggle matIconSuffix [for]="picker1">
-      </mat-datepicker-toggle>
-      <mat-datepicker #picker1 disabled="true"></mat-datepicker>
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Sozlesme Tarihi</mat-label>
+        <input
+          [matDatepicker]="picker2"
+          matInput
+          formControlName="contractDate"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="picker2">
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Sozlesme Tarihi</mat-label>
-      <input
-        [matDatepicker]="picker2"
-        matInput
-        formControlName="contractDate"
-      />
-      <mat-datepicker-toggle matIconSuffix [for]="picker2">
-      </mat-datepicker-toggle>
-      <mat-datepicker #picker2></mat-datepicker>
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Organizasyon Tarihi</mat-label>
+        <input
+          [matDatepicker]="picker3"
+          matInput
+          required
+          formControlName="organizationStartDate"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="picker3">
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Organizasyon Tarihi</mat-label>
-      <input
-        [matDatepicker]="picker3"
-        matInput
-        required
-        formControlName="organizationStartDate"
-      />
-      <mat-datepicker-toggle matIconSuffix [for]="picker3">
-      </mat-datepicker-toggle>
-      <mat-datepicker #picker3></mat-datepicker>
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Rezervasyon Tipi</mat-label>
+        <mat-select formControlName="reservationTypeId">
+          <mat-option *ngFor="let res of reses" [value]="res.id">
+            {{ res.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Rezervasyon Tipi</mat-label>
-      <mat-select formControlName="reservationTypeId">
-        <mat-option *ngFor="let res of reses" [value]="res.id">
-          {{ res.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Baslama Saati</mat-label>
+        <mat-select formControlName="organizationStartDate" required>
+          <mat-option *ngFor="let index of time" [value]="index">
+            {{ index | date : "HH:mm" }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Baslama Saati</mat-label>
-      <mat-select formControlName="organizationStartDate" required>
-        <mat-option *ngFor="let index of time" [value]="index">
-          {{ index | date : "HH:mm" }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Bitis Saati</mat-label>
+        <mat-select formControlName="organizationEndDate" required>
+          <mat-option *ngFor="let index of time" [value]="index">
+            {{ index | date : "HH:mm" }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Bitis Saati</mat-label>
-      <mat-select formControlName="organizationEndDate" required>
-        <mat-option *ngFor="let index of time" [value]="index">
-          {{ index | date : "HH:mm" }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Planlanan Kisi Sayisi</mat-label>
+        <input
+          type="number"
+          matInput
+          required
+          formControlName="plannedPeopleNumber"
+        />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Planlanan Kisi Sayisi</mat-label>
-      <input
-        type="number"
-        matInput
-        required
-        formControlName="plannedPeopleNumber"
-      />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Gerceklesen Kisi Sayisi</mat-label>
+        <input type="number" matInput disabled />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Gerceklesen Kisi Sayisi</mat-label>
-      <input type="number" matInput disabled />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Sorumlu Kisi</mat-label>
+        <input matInput readonly [value]="organization ? organization?.managingUser.username : user.username" />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Sorumlu Kisi</mat-label>
-      <input matInput readonly formControlName="managingUser" />{{ user.username }}
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>TCKN / VKN</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="identityNumber"
+          required
+        />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>TCKN / VKN</mat-label>
-      <input type="number" matInput formControlName="identityNumber" required />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Musteri Adi</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="customerFullName"
+          required
+        />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Musteri Adi</mat-label>
-      <input type="text" matInput formControlName="customerFullName" required />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Cep Telefonu</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="customerMobilePhone"
+          required
+        />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Cep Telefonu</mat-label>
-      <input
-        type="number"
-        matInput
-        formControlName="customerMobilePhone"
-        required
-      />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>E-Mail Adresi</mat-label>
+        <input type="text" matInput formControlName="emailAddress" required />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>E-Mail Adresi</mat-label>
-      <input type="text" matInput formControlName="emailAddress" required />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Kontak Kisi</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="contactPersonFullName"
+          required
+        />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Kontak Kisi</mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="contactPersonFullName"
-        required
-      />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Kontak / Cari Cep</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="contactPersonMobilePhone"
+        />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Kontak / Cari Cep</mat-label>
-      <input
-        type="number"
-        matInput
-        formControlName="contactPersonMobilePhone"
-      />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Adres</mat-label>
+        <input maxlength="256" matInput formControlName="address" />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Adres</mat-label>
-      <input maxlength="256" matInput formControlName="address" />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Notlar</mat-label>
+        <input maxlength="256" matInput formControlName="notes" />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Notlar</mat-label>
-      <input maxlength="256" matInput formControlName="notes" />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Ikramlar</mat-label>
+        <input maxlength="256" matInput formControlName="treats" />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Ikramlar</mat-label>
-      <input maxlength="256" matInput formControlName="treats" />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Teknik Ekipman</mat-label>
+        <input maxlength="256" matInput formControlName="technicalEquipment" />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Teknik Ekipman</mat-label>
-      <input maxlength="256" matInput formControlName="technicalEquipment" />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Ozel Istekler</mat-label>
+        <input maxlength="256" matInput formControlName="specialRequests" />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Ozel Istekler</mat-label>
-      <input maxlength="256" matInput formControlName="specialRequests" />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Odeme Notu</mat-label>
+        <input maxlength="256" matInput formControlName="paymentNote" />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Odeme Notu</mat-label>
-      <input maxlength="256" matInput formControlName="paymentNote" />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Sozlesme Tutari</mat-label>
+        <input type="number" matInput formControlName="contractAmount" />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Sozlesme Tutari</mat-label>
-      <input type="number" matInput formControlName="contractAmount" />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Kapora Tutari</mat-label>
+        <input type="number" matInput formControlName="downPayment" />
+      </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <mat-label>Kapora Tutari</mat-label>
-      <input type="number" matInput formControlName="downPayment" />
-    </mat-form-field>
+      <mat-form-field class="form-element">
+        <mat-label>Gelir Gider</mat-label>
+        <mat-select
+          type="text"
+          matInput
+          formControlName="organizationOrganizationCostRecipes"
+          multiple
+        >
+          <mat-option *ngFor="let cost of costs" [value]="cost.id">
+            {{ cost.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field class="form-element">
-      <mat-label>Gelir Gider</mat-label>
-      <mat-select
-        type="text"
-        matInput
-        formControlName="organizationOrganizationCostRecipes"
-        multiple
-      >
-        <mat-option *ngFor="let cost of costs" [value]="cost.id">
-          {{ cost.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="button">
+      <button class="btnSave" mat-raised-button type="submit">
+        Sozlesme Olustur
+      </button>
 
-    <button class="btnSave" mat-raised-button type="submit">
-      Sozlesme Olustur
-    </button>
-
-    <button class="btnSave" mat-raised-button type="button">Kaydet</button>
+      <button class="btnSave" mat-raised-button type="button">Kaydet</button>
+    </div>
   </div>
 </form>

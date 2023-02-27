@@ -29,6 +29,7 @@ export class OrganizationDetailsComponent {
   date1 = new FormControl(new Date())
   time = [];
 
+
   @Input()
   get organization() { return this._organization; }
   set organization(organization: any) {
@@ -51,18 +52,48 @@ export class OrganizationDetailsComponent {
     private router: Router,
     private auth: AuthService
   ) {
+    this.getUser();
     this.initForm();
     this.selectPlaces();
     this.selectOrgsStatus();
     this.selectOrgsType();
     this.selectReses();
     this.createTime();
-    // this.getUsername();
 
     this.form.get('placeId').valueChanges.subscribe(i => {
       this.getPlaceId(i);
+      this.calc()
     });
 
+    this.form.get('plannedPeopleNumber').valueChanges.subscribe(() => this.calc())
+
+    this.form.get('organizationOrganizationCostRecipes').valueChanges.subscribe(() => this.calc())
+
+  }
+
+  calc() {
+    const plannedPeopleNumber = this.form.get('plannedPeopleNumber').value
+    const organizationOrganizationCostRecipes = this.form.get('organizationOrganizationCostRecipes').value
+    const placeId = this.form.get('placeId').value
+
+    if (plannedPeopleNumber && organizationOrganizationCostRecipes && placeId && this.costs.length > 0) {
+      let total = 0;
+
+      organizationOrganizationCostRecipes?.forEach(element => {
+        const item = this.costs.find(itm => itm.id === element);
+        // tslint:disable-next-line:no-console
+        console.log(item)
+        if (item.isPerUser) {
+          total += item.salePrice * plannedPeopleNumber
+        } else {
+          total += item.salePrice
+        }
+      });
+
+      this.form.get('contractAmount').patchValue(total)
+      // tslint:disable-next-line:no-console
+      console.log(total)
+    }
   }
 
   createTime() {
@@ -91,7 +122,6 @@ export class OrganizationDetailsComponent {
       organizationEndDate: [null, [Validators.required]],
       plannedPeopleNumber: [null, [Validators.required]],
       realizedPeopleNumber: [null],
-      managingUser: [this.getUser()],
       identityNumber: [null, [Validators.required]],
       customerFullName: [null, [Validators.required]],
       customerMobilePhone: [null, [Validators.required]],
@@ -126,8 +156,6 @@ export class OrganizationDetailsComponent {
       organizationEndDate: this.organization.organizationEndDate,
       plannedPeopleNumber: this.organization.plannedPeopleNumber,
       realizedPeopleNumber: this.organization.realizedPeopleNumber,
-      managingUser: this.organization.managingUser,
-      // managingUserId: this.organization.managingUser.id,
       identityNumber: this.organization.identityNumber,
       customerFullName: this.organization.customerFullName,
       customerMobilePhone: this.organization.customerMobilePhone,
@@ -165,8 +193,8 @@ export class OrganizationDetailsComponent {
       organizationEndDate: value?.organizationEndDate,
       plannedPeopleNumber: value?.plannedPeopleNumber,
       realizedPeopleNumber: value?.plannedPeopleNumber,
-      managingUser: value?.managingUser,
       managingUserId: value?.managingUser.id,
+      managingUser: value?.managingUser.username,
       identityNumber: value?.identityNumber,
       customerFullName: value?.customerFullName,
       customerMobilePhone: value?.customerMobilePhone,
@@ -247,23 +275,10 @@ export class OrganizationDetailsComponent {
     );
   }
 
-  // selectCosts() {
-  //   this.costService.getOrgCostActive(this.placeId).subscribe(
-  //     (costs: any) => {
-  //       // tslint:disable-next-line:no-console
-  //       console.log(costs)
-  //       this.costs = costs.data
-  //     }
-  //   );
-  // }
-
   getPlaceId(placeId) {
-    // tslint:disable-next-line:no-console
-    console.log('Place Id:', placeId);
     this.costService.getOrgCostActive(placeId).subscribe(
       (costs: any) => {
         // tslint:disable-next-line:no-console
-        console.log(costs)
         this.costs = costs.data
       }
     );
@@ -272,6 +287,7 @@ export class OrganizationDetailsComponent {
   getUser() {
     this.auth.getUser().subscribe(user => {
       this.user = user
+
     });
   }
 }

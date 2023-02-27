@@ -1,19 +1,28 @@
 mat-drawer-container {
-  height: 100vh;
+  background-color: blue;
   display: flex;
+  width: 100%;
 
   mat-drawer {
-    max-width: 160px;
+    max-width: 200px;
     text-align: center;
     align-content: space-between;
-    overflow: hidden;
   }
 
-  .screen {
-    display: flex;
-    flex-direction: column;
-    width: 80vw;
-    justify-content: flex-start;
-    align-items: stretch;
+  mat-drawer-content {
+    width: 100%;
+    // .head {
+    // justify-content: space-between;
+    .main {
+      background-color: lightgray;
+      height: 90vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+    // ::ng-deep .ng-star-inserted{
+    //   width: 100%;
+    // }
   }
 }

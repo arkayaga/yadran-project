@@ -1,27 +1,28 @@
-<div class="link">
-  <a
-    mat-button
-    routerLinkActive="active"
-    routerLink="/"
-    [routerLinkActiveOptions]="{ exact: true }"
-    >Ana Sayfa</a
-  >
-  <a mat-button routerLinkActive="active" routerLink="/organization"
-    >Organizasyon</a
-  >
+<div class="sidenav">
+  <div class="link">
+    <a
+      mat-button
+      routerLinkActive="active"
+      routerLink="/"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Ana Sayfa</a
+    >
+    <a mat-button routerLinkActive="active" routerLink="/organization"
+      >Organizasyon</a
+    >
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          Yonetim Paneli
+        </mat-expansion-panel-header>
+        <mat-action-row *ngFor="let item of menu">
+          <a mat-button routerLinkActive="active" routerLink="{{ item.url }}">
+            {{ item.name }}
+          </a>
+        </mat-action-row>
+      </mat-expansion-panel>
+  </div>
 
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header> Yonetim Paneli </mat-expansion-panel-header>
-      <mat-action-row *ngFor="let item of menu">
-        <a mat-button routerLinkActive="active" routerLink="{{ item.url }}">
-          {{ item.name }}
-        </a>
-      </mat-action-row>
-    </mat-expansion-panel>
-  </mat-accordion>
+  <button mat-raised-button type="button" class="button" (click)="onLogout()">
+    Cikis
+  </button>
 </div>
-
-<button mat-raised-button type="button" class="button" (click)="onLogout()">
-  Cikis
-</button>

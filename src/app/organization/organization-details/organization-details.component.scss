@@ -1,0 +1,42 @@
+:host {
+  .form {
+    margin: 15px;
+    padding: 15px;
+    background-color: #ffff;
+    border-radius: 5px;
+    
+      .form-group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        //   width: 100%;
+        overflow: hidden;
+    
+    
+        mat-form-field {
+          width: 25vw;
+          min-width: 25vw;
+          height: 5vh;
+          margin: 15px;
+          flex-grow: 3;
+          flex-shrink: 1;
+    
+          // ::ng-deep .mat-mdc-text-field-wrapper
+          // {
+          //   height: 50%;
+          // }
+        }
+      }
+    
+      .button {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        button {
+          margin: 10px;
+          width: 20vw;
+          min-width: 15vw;
+        }
+      }
+    }  
+}

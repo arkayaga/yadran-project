@@ -1,6 +1,7 @@
-<div class="search-container">
-  <div class="box">
-    <mat-form-field class="search" appearance="outline">
+<div class="container">
+  <div class="searchbox">
+    <mat-label>Organizasyon Gelir Giderleri </mat-label>
+    <mat-form-field class="search" >
       <mat-icon matPrefix>search</mat-icon>
       <input
         matInput
@@ -15,7 +16,7 @@
     </button>
   </div>
 
-  <table mat-table [dataSource]="dataSource">
+  <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="org">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         Organizasyon Adi

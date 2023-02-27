@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 // import { OrganizationDetailsComponent } from './organization-details/organization-details.component';
 import { DetailsModalComponent } from './organization-details/details-modal/details-modal.component';
 import { OrganizationStatusService } from '../core/organization-status/organization-status.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-organization',
@@ -17,6 +18,7 @@ import { OrganizationStatusService } from '../core/organization-status/organizat
   styleUrls: ['./organization.component.scss'],
 })
 export class OrganizationComponent {
+  form: FormGroup
   orgs = [];
   status = [];
   displayedColumns: string[] = [
@@ -38,8 +40,10 @@ export class OrganizationComponent {
     private orgService: OrganizationService,
     private orgStatus: OrganizationStatusService,
     public dialog: MatDialog,
+    private formBuilder: FormBuilder,
   ) {
     this.getlist();
+    this.initForm();
   }
 
   table = [
@@ -140,6 +144,17 @@ export class OrganizationComponent {
   openDialog(org) {
     this.dialog.open(DetailsModalComponent, {
       data: org.id
+    })
+  }
+
+  // tslint:disable-next-line:no-empty
+  onSearch() { }
+
+  initForm() {
+    this.form = this.formBuilder.group({
+      start: [null],
+      end: [null],
+      select: [null]
     })
   }
 }

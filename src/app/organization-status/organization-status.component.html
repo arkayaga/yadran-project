@@ -1,6 +1,7 @@
-<div class="search-container">
-    <div class="box">
-      <mat-form-field class="search" appearance="outline">
+<div class="container">
+    <div class="searchbox">
+    <mat-label>Organizasyon Durumlari </mat-label>
+      <mat-form-field class="search">
         <mat-icon matPrefix>search</mat-icon>
   
         <input
@@ -18,7 +19,7 @@
   
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Organizasyon Tipler</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Organizasyon Durumlari</th>
         <td mat-cell *matCellDef="let org">
           {{ org.name }}
         </td>

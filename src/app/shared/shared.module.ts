@@ -18,6 +18,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSortModule } from "@angular/material/sort";
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         MatExpansionModule,
         MatNativeDateModule,
         MatDatepickerModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        MatSortModule
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' },
