@@ -1,7 +1,7 @@
 :host {
   .form {
     margin: 15px;
-    padding: 15px;
+    padding: 5px 20px 50px 20px;
     background-color: #ffff;
     border-radius: 5px;
     
@@ -16,8 +16,8 @@
         mat-form-field {
           width: 25vw;
           min-width: 25vw;
-          height: 5vh;
-          margin: 15px;
+          // height: 10vh;
+          margin: 5px;
           flex-grow: 3;
           flex-shrink: 1;
     
@@ -29,6 +29,7 @@
       }
     
       .button {
+        margin-top: 10px;
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-end;

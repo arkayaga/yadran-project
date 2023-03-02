@@ -21,7 +21,12 @@
         </mat-option>
       </mat-select></mat-form-field
     >
-    <button mat-raised-button type="button" color="accent" [hidden]="form.dirty">
+    <button
+      mat-raised-button
+      type="button"
+      color="accent"
+      [hidden]="form.dirty"
+    >
       Temizle
     </button>
     <button mat-raised-button type="submit" color="primary">Sorgula</button>
@@ -52,8 +57,10 @@
         *ngFor="let column of table"
         [matColumnDef]="column.columnDef"
       >
-  
-        <ng-container *ngIf="column.type === 'date'" matColumnDef="{{ column.header }}">
+        <ng-container
+          *ngIf="column.type === 'date'"
+          matColumnDef="{{ column.header }}"
+        >
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{ column.header }}
           </th>
@@ -62,7 +69,10 @@
           </td>
         </ng-container>
 
-        <ng-container *ngIf="column.type === 'text'" matColumnDef="{{ column.header }}">
+        <ng-container
+          *ngIf="column.type === 'text'"
+          matColumnDef="{{ column.header }}"
+        >
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{ column.header }}
           </th>

@@ -28,7 +28,8 @@ export class OrganizationDetailsComponent {
   placeId: string;
   date1 = new FormControl(new Date())
   time = [];
-
+  total = 0;
+  resault = 0;
 
   @Input()
   get organization() { return this._organization; }
@@ -37,6 +38,7 @@ export class OrganizationDetailsComponent {
 
     if (organization) {
       this.setForm();
+      this.getPlaceId(organization.placeId);
     }
   }
   private _organization;
@@ -68,33 +70,55 @@ export class OrganizationDetailsComponent {
     this.form.get('plannedPeopleNumber').valueChanges.subscribe(() => this.calc())
 
     this.form.get('organizationOrganizationCostRecipes').valueChanges.subscribe(() => this.calc())
-
   }
 
   calc() {
+    const contractAmount = this.form.get('contractAmount');
     const plannedPeopleNumber = this.form.get('plannedPeopleNumber').value
     const organizationOrganizationCostRecipes = this.form.get('organizationOrganizationCostRecipes').value
     const placeId = this.form.get('placeId').value
 
     if (plannedPeopleNumber && organizationOrganizationCostRecipes && placeId && this.costs.length > 0) {
-      let total = 0;
+      this.total = 0;
+      contractAmount.patchValue(0)
 
       organizationOrganizationCostRecipes?.forEach(element => {
         const item = this.costs.find(itm => itm.id === element);
-        // tslint:disable-next-line:no-console
-        console.log(item)
-        if (item.isPerUser) {
-          total += item.salePrice * plannedPeopleNumber
-        } else {
-          total += item.salePrice
-        }
-      });
+          if (item.isPerUser) {
+            this.total += item.salePrice * plannedPeopleNumber
+          } else {
+            this.total += item.salePrice
+          }
+          this.places.forEach(i => {
+            if (placeId === i.id) {
+              const profitRate = i.profitRate
 
-      this.form.get('contractAmount').patchValue(total)
-      // tslint:disable-next-line:no-console
-      console.log(total)
+              this.resault = (100 + profitRate) / 100 * this.total
+
+              contractAmount.patchValue(this.resault.toFixed(2))
+
+              // this.form.get('organizationOrganizationCostRecipes').valueChanges.subscribe(a => {
+              //   // tslint:disable-next-line:no-console
+              //   console.log(a)
+              //   if (a.length === 0) {
+              //     this.total = 0
+              //     contractAmount.patchValue(0)
+              //   }
+              // })
+            }
+          });
+      });
+    } else {
+      this.total = 0;
+      contractAmount.patchValue(0);
     }
-  }
+    // tslint:disable-next-line:no-console
+    console.log(contractAmount.value, this.total)
+    contractAmount.setValidators([Validators.min(this.total), Validators.required]);
+    contractAmount.updateValueAndValidity({ emitEvent: false });
+
+  };
+
 
   createTime() {
     this.time = Array.from({
@@ -120,9 +144,9 @@ export class OrganizationDetailsComponent {
       reservationTypeId: [null],
       organizationStartDate: [null, [Validators.required]],
       organizationEndDate: [null, [Validators.required]],
-      plannedPeopleNumber: [null, [Validators.required]],
+      plannedPeopleNumber: [null, [Validators.required, Validators.pattern("^[0-9]*$")]],
       realizedPeopleNumber: [null],
-      identityNumber: [null, [Validators.required]],
+      identityNumber: [null, [Validators.required, Validators.pattern("^[0-9]*$")]],
       customerFullName: [null, [Validators.required]],
       customerMobilePhone: [null, [Validators.required]],
       emailAddress: [null, [Validators.required]],
@@ -134,7 +158,7 @@ export class OrganizationDetailsComponent {
       technicalEquipment: [null],
       specialRequests: [null],
       paymentNote: [null],
-      contractAmount: [null],
+      contractAmount: [null, [Validators.required]],
       downPayment: [null],
       organizationOrganizationCostRecipes: [null],
 
@@ -175,7 +199,7 @@ export class OrganizationDetailsComponent {
       expense: this.organization.expense,
       organizationOrganizationCostRecipes: this.organization.organizationOrganizationCostRecipes.map(
         item => item.organizationCostRecipeId),
-    });
+    }, {emitEvent: false});
   }
 
   getRequest() {
