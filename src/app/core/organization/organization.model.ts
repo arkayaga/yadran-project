@@ -43,3 +43,16 @@ export interface Organization {
     place?: Place;
     organizationOrganizationCostRecipes?: OrganizationCost;
 }
+
+
+export interface OrganizationFilter{
+    beginDate?: string,
+    endDate?: string,
+    placeIds?: string,
+    organizationStatusId?: string,
+    skip: number,
+    take: number,
+    orderBy?: string,
+    orderType?: string,
+    search?: string
+  }

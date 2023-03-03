@@ -13,3 +13,17 @@
     Logout
   </button>
 </mat-toolbar>
+
+<nav mat-tab-nav-bar [tabPanel]="tabPanel" *ngIf="!mybool">
+  <a
+    mat-tab-link
+    *ngFor="let link of links"
+    [routerLink]="link.path"
+    routerLinkActive
+    #rla="routerLinkActive"
+    [active]="rla.isActive"
+  >
+    {{ link.label }}
+  </a>
+  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+</nav>

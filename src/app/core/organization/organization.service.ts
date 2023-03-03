@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Organization } from './organization.model';
+import { Organization, OrganizationFilter } from './organization.model';
 import { Response } from '../api.model';
 
 
@@ -31,5 +31,9 @@ export class OrganizationService {
 
   deleteOrg(id: string): Observable<Response<Organization>> {
     return this.http.delete<Response<Organization>>(this.url + '/' + id)
+  }
+
+  filterOrgs(request: OrganizationFilter): Observable<Response<Organization[]>> {
+    return this.http.post<Response<Organization[]>>(this.url + '/Filter', request)
   }
 }
