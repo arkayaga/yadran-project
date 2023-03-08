@@ -20,6 +20,8 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from "@angular/material/sort";
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatCardModule} from '@angular/material/card';
+
 
 @NgModule({
     declarations: [
@@ -28,7 +30,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
     ],
     exports: [
         SearchPipe,
@@ -48,7 +50,8 @@ import { MatTabsModule } from '@angular/material/tabs';
         MatDatepickerModule,
         MatFormFieldModule,
         MatSortModule,
-        MatTabsModule
+        MatTabsModule,
+        MatCardModule,
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' },

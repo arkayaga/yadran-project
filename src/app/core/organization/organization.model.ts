@@ -1,3 +1,4 @@
+import * as moment from "moment";
 import { OrganizationCost } from "../../core/organization-cost/organization-cost.model";
 import { OrganizationStatus } from "../../core/organization-status/organization-status.model";
 import { OrganizationType } from "../../core/organization-type/organization-type.model";
@@ -46,12 +47,12 @@ export interface Organization {
 
 
 export interface OrganizationFilter{
-    beginDate?: string,
-    endDate?: string,
-    placeIds?: string,
+    beginDate?: moment.Moment,
+    endDate?: moment.Moment,
+    placeIds?: Place,
     organizationStatusId?: string,
-    skip: number,
-    take: number,
+    skip?: number,
+    take?: number,
     orderBy?: string,
     orderType?: string,
     search?: string

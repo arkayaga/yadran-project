@@ -3,7 +3,7 @@
     <div class="form-group">
       <mat-form-field class="form-element">
         <mat-label>Salon / Mekan Adi</mat-label>
-        <mat-select formControlName="placeId" >
+        <mat-select formControlName="placeId">
           <mat-option *ngFor="let place of places" [value]="place.id">
             {{ place.name }}
           </mat-option>
@@ -12,7 +12,7 @@
 
       <mat-form-field class="form-element">
         <mat-label>Organizasyon Durumu</mat-label>
-        <mat-select formControlName="organizationStatusId" >
+        <mat-select formControlName="organizationStatusId">
           <mat-option *ngFor="let status of orgsStatus" [value]="status.id">
             {{ status.name }}
           </mat-option>
@@ -21,7 +21,7 @@
 
       <mat-form-field class="form-element">
         <mat-label>Organizasyon Tipi</mat-label>
-        <mat-select formControlName="organizationTypeId" >
+        <mat-select formControlName="organizationTypeId">
           <mat-option *ngFor="let type of orgsType" [value]="type.id">
             {{ type.name }}
           </mat-option>
@@ -59,7 +59,6 @@
         <input
           [matDatepicker]="picker3"
           matInput
-          
           formControlName="organizationStartDate"
         />
         <mat-datepicker-toggle matIconSuffix [for]="picker3">
@@ -78,7 +77,7 @@
 
       <mat-form-field class="form-element">
         <mat-label>Baslama Saati</mat-label>
-        <mat-select formControlName="organizationStartDate" >
+        <mat-select formControlName="organizationStartDate">
           <mat-option *ngFor="let index of time" [value]="index">
             {{ index | date : "HH:mm" }}
           </mat-option>
@@ -87,7 +86,7 @@
 
       <mat-form-field class="form-element">
         <mat-label>Bitis Saati</mat-label>
-        <mat-select formControlName="organizationEndDate" >
+        <mat-select formControlName="organizationEndDate">
           <mat-option *ngFor="let index of time" [value]="index">
             {{ index | date : "HH:mm" }}
           </mat-option>
@@ -96,12 +95,7 @@
 
       <mat-form-field class="form-element">
         <mat-label>Planlanan Kisi Sayisi</mat-label>
-        <input
-          type="number"
-          matInput
-          
-          formControlName="plannedPeopleNumber"
-        />
+        <input type="number" matInput formControlName="plannedPeopleNumber" />
       </mat-form-field>
 
       <mat-form-field class="form-element">
@@ -122,47 +116,27 @@
 
       <mat-form-field class="form-element">
         <mat-label>TCKN / VKN</mat-label>
-        <input
-          type="text"
-          matInput
-          formControlName="identityNumber"
-          
-        />
+        <input type="text" matInput formControlName="identityNumber" />
       </mat-form-field>
 
       <mat-form-field class="form-element">
         <mat-label>Musteri Adi</mat-label>
-        <input
-          type="text"
-          matInput
-          formControlName="customerFullName"
-          
-        />
+        <input type="text" matInput formControlName="customerFullName" />
       </mat-form-field>
 
       <mat-form-field class="form-element">
         <mat-label>Cep Telefonu</mat-label>
-        <input
-          type="number"
-          matInput
-          formControlName="customerMobilePhone"
-          
-        />
+        <input type="number" matInput formControlName="customerMobilePhone" />
       </mat-form-field>
 
       <mat-form-field class="form-element">
         <mat-label>E-Mail Adresi</mat-label>
-        <input type="text" matInput formControlName="emailAddress"  />
+        <input type="text" matInput formControlName="emailAddress" />
       </mat-form-field>
 
       <mat-form-field class="form-element">
         <mat-label>Kontak Kisi</mat-label>
-        <input
-          type="text"
-          matInput
-          formControlName="contactPersonFullName"
-          
-        />
+        <input type="text" matInput formControlName="contactPersonFullName" />
       </mat-form-field>
 
       <mat-form-field class="form-element">
@@ -206,15 +180,8 @@
 
       <mat-form-field class="form-element">
         <mat-label>Sozlesme Tutari</mat-label>
-        <input
-          type="number"
-          matInput
-          formControlName="contractAmount"
-        />
-        <mat-hint
-          *ngIf="
-          total > 0
-          "
+        <input type="number" matInput formControlName="contractAmount" />
+        <mat-hint *ngIf="total > 0"
           >Sözleşme tutari minimum <strong>{{ total }} TL</strong> olmalidir
         </mat-hint>
       </mat-form-field>

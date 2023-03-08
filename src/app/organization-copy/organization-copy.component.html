@@ -1,10 +1,14 @@
 <div class="search-detail">
-  <form [formGroup]="form" (ngSubmit)="onSearch()">
+  <form [formGroup]="form" (ngSubmit)="loadData()">
     <mat-form-field class="detail">
       <mat-label>Tarih Araligi</mat-label>
-      <mat-date-range-input [rangePicker]="picker">
-        <input matStartDate placeholder="Baslangic" formControlName="start" />
-        <input matEndDate placeholder="Bitis" formControlName="end" />
+      <mat-date-range-input [rangePicker]="picker" formGroupName="range">
+        <input
+          matStartDate
+          placeholder="Baslangic"
+          formControlName="beginDate"
+        />
+        <input matEndDate placeholder="Bitis" formControlName="endDate" />
       </mat-date-range-input>
       <mat-datepicker-toggle
         matIconSuffix
@@ -15,7 +19,7 @@
 
     <mat-form-field class="detail">
       <mat-label>Organizasyon Durumu</mat-label>
-      <mat-select formControlName="select">
+      <mat-select formControlName="organizationStatusId">
         <mat-option *ngFor="let index of status" [value]="index.id">
           {{ index.name }}
         </mat-option>
@@ -25,7 +29,9 @@
       mat-raised-button
       type="button"
       color="accent"
-      [hidden]="form.dirty"
+      [hidden]="!form.dirty"
+      type="button"
+      (click)="onClear()"
     >
       Temizle
     </button>
@@ -41,9 +47,9 @@
       <input
         matInput
         placeholder="Arama"
-        (keyup)="applyFilter($event)"
-        #input
+        [formControl]="searchField"
       />
+      
     </mat-form-field>
 
     <button class="btnNew" mat-fab (click)="onNew()">
@@ -109,13 +115,13 @@
       <tr mat-row *matRowDef="let org; columns: displayedColumns"></tr>
 
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">
-          Sonuc Bulunamadi
-        </td>
+        <td class="mat-cell" colspan="4">Sonuc Bulunamadi</td>
       </tr>
     </table>
     <mat-paginator
       [pageSizeOptions]="pageSizeOptions"
+      [pageSize]="pageSize"
+      [length]="27"
       (page)="pageChanged($event)"
       aria-label="Sayfa Secin"
     ></mat-paginator>

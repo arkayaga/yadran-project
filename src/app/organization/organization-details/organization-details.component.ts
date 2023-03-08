@@ -128,9 +128,6 @@ export class OrganizationDetailsComponent {
       minutes: (hour % 2 === 0 ? 0 : 30)
     })
     );
-    // moment.parseZone(this.time).utcOffset();
-    // moment().utcOffset();
-    // moment(this.time.toString(), "LT").format('HH:mm');
   }
 
 

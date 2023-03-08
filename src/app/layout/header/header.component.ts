@@ -12,7 +12,7 @@ export class HeaderComponent {
   links = [
     { label: 'Organizasyon', path: '/organization' },
     { label: 'Organizasyon Kopya', path: '/organization-copy' },
-    { label: 'Array', path: '/' },
+    { label: 'Array Task', path: '/task' },
   ];
 
   constructor(

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrganizationService } from '../core/organization/organization.service';
@@ -8,7 +8,11 @@ import { Organization } from '../core/organization/organization.model';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { OrganizationStatusService } from '../core/organization-status/organization-status.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import * as moment from 'moment';
+import { debounceTime } from 'rxjs';
+// import { BehaviorSubject, debounceTime, distinctUntilChanged, Observable, switchMap } from 'rxjs';
+// import * as moment from 'moment';
 
 @Component({
   selector: 'app-organization-copy',
@@ -20,9 +24,13 @@ export class OrganizationCopyComponent {
   orgs = [];
   status = [];
   isLoading = false;
+  organizationStatusId: string;
+  beginDate: string;
+  endDate: string;
   skip = 0;
   take = 5;
   currentPage = 0;
+  pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   displayedColumns: string[] = [
     'org',
@@ -34,11 +42,15 @@ export class OrganizationCopyComponent {
     'button'
   ];
   dataSource = new MatTableDataSource<Organization>();
-  customPaginatorIntl = new MatPaginatorIntl();
-
-
+  // customPaginatorIntl = new MatPaginatorIntl();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+  // searchTerm$ = new BehaviorSubject<string>("");
+  // resultsEmpty$ = new BehaviorSubject<boolean>(false);
+  // stts = "";
+  searchField = new FormControl("");
+  lastRequest;
 
   constructor(
     private router: Router,
@@ -47,9 +59,16 @@ export class OrganizationCopyComponent {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
   ) {
-    this.getlist();
+    // this.getlist();
     this.initForm();
+    this.getStatus()
     this.loadData();
+
+    this.searchField.valueChanges.pipe(
+      debounceTime(400)).subscribe(res => {
+        // tslint:disable-next-line:no-console
+        console.log(res)
+      })
   }
 
   table = [
@@ -87,27 +106,7 @@ export class OrganizationCopyComponent {
   ];
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.customPagination();
-  }
-
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  getlist() {
-    this.orgService.getOrgs().subscribe((reses) => {
-      this.orgs = reses.data;
-      this.dataSource.data = this.orgs;
-      this.getStatus()
-    });
   }
 
   getStatus() {
@@ -140,7 +139,7 @@ export class OrganizationCopyComponent {
       if (result.isConfirmed) {
         this.orgService.deleteOrg(org.id).subscribe(() => {
           Swal.fire('Silindi!', '', 'success');
-          this.getlist();
+          this.loadData();
         });
       } else {
         Swal.fire('Vazgecildi', '', 'info');
@@ -149,24 +148,39 @@ export class OrganizationCopyComponent {
   }
 
 
-  // tslint:disable-next-line:no-empty
-  onSearch() { }
-
   initForm() {
     this.form = this.formBuilder.group({
-      start: [null],
-      end: [null],
-      select: [null]
+      range: this.formBuilder.group({
+        beginDate: [null],
+        endDate: [null],
+      }),
+      organizationStatusId: [null]
     })
   }
 
-  loadData() {
+  getRequest() {
+    const beginDate = this.form.get('range').get('beginDate').value;
+    const endDate = this.form.get('range').get('endDate').value;
+
     const request = {
       skip: this.skip,
       take: this.take,
+      organizationStatusId: this.form.get('organizationStatusId').value,
+      beginDate: beginDate ? moment(beginDate) : null,
+      endDate: endDate ? moment(endDate) : null,
     }
+
+    return request
+  }
+
+
+  loadData() {
     this.isLoading = true;
-    this.orgService.filterOrgs(request).subscribe()
+    this.orgService.filterOrgs(this.getRequest()).subscribe((reses) => {
+      this.orgs = reses.data;
+      this.dataSource.data = this.orgs;
+      // this.search(this.searchTerm$)
+    }).add(() => this.isLoading = false);
   }
 
   pageChanged(event: PageEvent) {
@@ -176,26 +190,64 @@ export class OrganizationCopyComponent {
     this.currentPage = event.pageIndex + 1;
     this.skip = this.take * event.pageIndex;
     this.loadData();
-  }
-
-  customPagination() {
-    const paginator = this.paginator._intl
-    paginator.itemsPerPageLabel = 'Gosterim ';
-    paginator.nextPageLabel = 'Sonraki Sayfa ';
-    paginator.previousPageLabel = 'Onceki Sayfa ';
-
-    // tslint:disable-next-line:no-console
-    console.log(paginator.getRangeLabel)
-
-    paginator.getRangeLabel = (page: number, pageSize: number, length: number) => {
-      if (length === 0 || pageSize === 0) {
-        return `Kayit bulunamadi.`;
-      }
-      length = Math.max(length, 0);
-      const startIndex = page;
-      return `${length} kayit icerisinden ${startIndex + 1}. sayfa  `;
-    }
 
   }
+
+  // customPagination() {
+  //   const paginator = this.paginator._intl
+  //   paginator.itemsPerPageLabel = 'Gosterim ';
+  //   paginator.nextPageLabel = 'Sonraki Sayfa ';
+  //   paginator.previousPageLabel = 'Onceki Sayfa ';
+
+  //   paginator.getRangeLabel = (page: number, pageSize: number, length: number) => {
+  //     if (length === 0 || pageSize === 0) {
+  //       return `Kayit bulunamadi.`;
+  //     }
+  //     length = Math.max(length, 0);
+  //     const startIndex = page;
+  //     return `${length} kayit icerisinden ${startIndex + 1}. sayfa  `;
+  //   }
+  // }
+
+  // onFind() {
+  //   this.organizationStatusId = this.form.get('organizationStatusId').value
+  //   this.beginDate = this.form.get('range.beginDate').value
+  //   // tslint:disable-next-line:no-console
+  //   console.log(moment(this.beginDate).format())
+  //   this.endDate = this.form.get('range.endDate').value
+
+  //   this.orgService.filterOrgs(this.getRequest()).subscribe(status => {
+
+  //     const item = status.data.filter(x => x.organizationStatusId === this.organizationStatusId)
+  //     // if (this.beginDate && this.endDate) {
+  //     //   return item.organizationStartDate >= this.beginDate && x.organizationEndDate <= this.endDate;
+  //     // }
+  //     // tslint:disable-next-line:no-console
+  //     console.log(item)
+  //     // tslint:disable-next-line:no-console
+  //     // console.log(beginDate)
+  //     this.orgs = item;
+  //     this.dataSource.data = this.orgs;
+  //   });
+  // };
+
+  onClear() {
+    this.form.reset();
+
+    this.skip = 0;
+    this.take = 5;
+
+    this.loadData();
+    this.paginator.firstPage();
+  };
+
+  // search(terms: Observable<string>) {
+  //   return terms.pipe(
+  //     debounceTime(400),
+  //     distinctUntilChanged(),
+  //     switchMap(async () => this.loadData())
+  //   );
+  // }
 }
+
 
