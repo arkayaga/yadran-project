@@ -11,8 +11,6 @@ import { OrganizationStatusService } from '../core/organization-status/organizat
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { debounceTime } from 'rxjs';
-// import { BehaviorSubject, debounceTime, distinctUntilChanged, Observable, switchMap } from 'rxjs';
-// import * as moment from 'moment';
 
 @Component({
   selector: 'app-organization-copy',
@@ -42,15 +40,11 @@ export class OrganizationCopyComponent {
     'button'
   ];
   dataSource = new MatTableDataSource<Organization>();
-  // customPaginatorIntl = new MatPaginatorIntl();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  // searchTerm$ = new BehaviorSubject<string>("");
-  // resultsEmpty$ = new BehaviorSubject<boolean>(false);
-  // stts = "";
-  searchField = new FormControl("");
-  lastRequest;
+  searchField = new FormControl();
+  searchValue = '';
 
   constructor(
     private router: Router,
@@ -59,16 +53,18 @@ export class OrganizationCopyComponent {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
   ) {
-    // this.getlist();
     this.initForm();
-    this.getStatus()
+    this.getStatus();
     this.loadData();
 
     this.searchField.valueChanges.pipe(
-      debounceTime(400)).subscribe(res => {
-        // tslint:disable-next-line:no-console
-        console.log(res)
-      })
+      debounceTime(500)).subscribe(value => {
+        this.searchValue = value
+
+        this.loadData();
+        this.paginator.firstPage();
+
+      });
   }
 
   table = [
@@ -105,9 +101,9 @@ export class OrganizationCopyComponent {
     }
   ];
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
+  // ngAfterViewInit() {
+  //   this.dataSource.sort = this.sort;
+  // }
 
   getStatus() {
     this.orgStatus.getOrgsStatus().subscribe(status => {
@@ -147,7 +143,6 @@ export class OrganizationCopyComponent {
     });
   }
 
-
   initForm() {
     this.form = this.formBuilder.group({
       range: this.formBuilder.group({
@@ -168,18 +163,17 @@ export class OrganizationCopyComponent {
       organizationStatusId: this.form.get('organizationStatusId').value,
       beginDate: beginDate ? moment(beginDate) : null,
       endDate: endDate ? moment(endDate) : null,
+      search: this.searchValue
     }
 
     return request
   }
-
 
   loadData() {
     this.isLoading = true;
     this.orgService.filterOrgs(this.getRequest()).subscribe((reses) => {
       this.orgs = reses.data;
       this.dataSource.data = this.orgs;
-      // this.search(this.searchTerm$)
     }).add(() => this.isLoading = false);
   }
 
@@ -237,17 +231,10 @@ export class OrganizationCopyComponent {
     this.skip = 0;
     this.take = 5;
 
-    this.loadData();
+    this.loadData()
     this.paginator.firstPage();
-  };
 
-  // search(terms: Observable<string>) {
-  //   return terms.pipe(
-  //     debounceTime(400),
-  //     distinctUntilChanged(),
-  //     switchMap(async () => this.loadData())
-  //   );
-  // }
+  };
 }
 
 

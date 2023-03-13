@@ -49,7 +49,14 @@
         placeholder="Arama"
         [formControl]="searchField"
       />
-      
+      <!-- <button
+        *ngIf="searchValue"
+        matSuffix
+        mat-icon-button
+        (click)="searchValue = ''"
+      >
+        <mat-icon>close</mat-icon>
+      </button> -->
     </mat-form-field>
 
     <button class="btnNew" mat-fab (click)="onNew()">
