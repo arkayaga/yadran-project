@@ -25,6 +25,7 @@ export class OrganizationCopyComponent {
   organizationStatusId: string;
   beginDate: string;
   endDate: string;
+  totalItemsCount: number;
   skip = 0;
   take = 5;
   currentPage = 0;
@@ -171,14 +172,14 @@ export class OrganizationCopyComponent {
 
   loadData() {
     this.isLoading = true;
-    this.orgService.filterOrgs(this.getRequest()).subscribe((reses) => {
+    this.orgService.filterOrgs(this.getRequest()).subscribe((reses :any) => {
       this.orgs = reses.data;
       this.dataSource.data = this.orgs;
+      this.totalItemsCount = reses.pagination.totalItemsCount
     }).add(() => this.isLoading = false);
   }
 
   pageChanged(event: PageEvent) {
-    // tslint:disable-next-line:no-console
     console.log({ event });
     this.take = event.pageSize;
     this.currentPage = event.pageIndex + 1;
