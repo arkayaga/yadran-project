@@ -1,33 +1,35 @@
 <form [formGroup]="orderForm">
   <mat-card>
     <h2>Add Area</h2>
-    <button mat-raised-button (click)="onAdd()">Add</button>
-    <div
-      formArrayName="items"
-      *ngFor="let item of orderForm.get('items')['controls']; let i = index"
-    >
-      <div [formGroupName]="i">
-        <mat-form-field>
-          <mat-label>text1</mat-label>
-          <input matInput formControlName="text1" required />
-        </mat-form-field>
+    <button class="addBtn" mat-raised-button (click)="onAdd()">Add</button>
+    <mat-card-content>
+      <div
+        formArrayName="items"
+        *ngFor="let item of orderForm.get('items')['controls']; let i = index"
+      >
+        <div [formGroupName]="i">
+          <mat-form-field>
+            <mat-label>text1</mat-label>
+            <input matInput formControlName="text1" required />
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>text2</mat-label>
-          <input matInput formControlName="text2" />
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>text2</mat-label>
+            <input matInput formControlName="text2" />
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Select</mat-label>
-          <mat-select formControlName="select" matNativeControl required>
-            <mat-option value="test1">test1</mat-option>
-            <mat-option value="test2">test2</mat-option>
-            <mat-option value="test3">test3</mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Select</mat-label>
+            <mat-select formControlName="select" matNativeControl required>
+              <mat-option value="test1">test1</mat-option>
+              <mat-option value="test2">test2</mat-option>
+              <mat-option value="test3">test3</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <button mat-raised-button (click)="onDelete()">Delete</button>
+          <button class="deleteBtn" mat-raised-button (click)="onDelete()">Delete</button>
+        </div>
       </div>
-    </div>
+    </mat-card-content>
   </mat-card>
 </form>

@@ -14,7 +14,7 @@
   </button>
 </mat-toolbar>
 
-<nav mat-tab-nav-bar [tabPanel]="tabPanel" *ngIf="!mybool">
+<nav mat-tab-nav-bar [tabPanel]="tabPanel" >
   <a
     mat-tab-link
     *ngFor="let link of links"
@@ -25,5 +25,5 @@
   >
     {{ link.label }}
   </a>
-  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+  <mat-tab-nav-panel #tabPanel ></mat-tab-nav-panel>
 </nav>
