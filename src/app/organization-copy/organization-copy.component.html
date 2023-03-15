@@ -1,7 +1,7 @@
 <div class="search-detail">
   <form [formGroup]="form" (ngSubmit)="loadData()">
     <mat-form-field class="detail">
-      <mat-label>Tarih Araligi</mat-label>
+      <mat-label translate>dateRange</mat-label>
       <mat-date-range-input [rangePicker]="picker" formGroupName="range">
         <input
           matStartDate
@@ -18,7 +18,7 @@
     </mat-form-field>
 
     <mat-form-field class="detail">
-      <mat-label>Organizasyon Durumu</mat-label>
+      <mat-label translate>organizationStatus</mat-label>
       <mat-select formControlName="organizationStatusId">
         <mat-option *ngFor="let index of status" [value]="index.id">
           {{ index.name }}
@@ -33,20 +33,28 @@
       type="button"
       (click)="onClear()"
     >
-      Temizle
+      <span translate>clear</span>
     </button>
-    <button mat-raised-button type="submit" color="primary">Sorgula</button>
+    <button mat-raised-button type="submit" color="primary">
+      <span translate>sort</span>
+    </button>
   </form>
+
+  <p>
+    "{{
+      "ALI_GOT_APPLES_WHILE_GOING_HOME" | translate : { customValue: count }
+    }}"
+  </p>
 </div>
 
 <div class="container">
   <div class="searchbox">
-    <mat-label>Organizasyonlar </mat-label>
+    <mat-label translate>organizations </mat-label>
     <mat-form-field class="search">
       <mat-icon matPrefix>search</mat-icon>
       <input
         matInput
-        placeholder="Arama"
+        placeholder="{{ 'search' | translate }}"
         [formControl]="searchField"
       />
       <!-- <button
@@ -75,7 +83,7 @@
           matColumnDef="{{ column.header }}"
         >
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ column.header }}
+            {{ column.header | translate }}
           </th>
           <td mat-cell *matCellDef="let row">
             {{ row[column.cellDef] | date : "fullDate" }}
@@ -87,7 +95,7 @@
           matColumnDef="{{ column.header }}"
         >
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ column.header }}
+            {{ column.header | translate }}
           </th>
           <td mat-cell *matCellDef="let row">
             {{ row[column.cellDef] }}
@@ -96,7 +104,9 @@
       </ng-container>
 
       <ng-container matColumnDef="button">
-        <th mat-header-cell *matHeaderCellDef class="islem">Islem</th>
+        <th mat-header-cell *matHeaderCellDef class="islem" translate>
+          operate
+        </th>
         <td mat-cell *matCellDef="let org">
           <button
             mat-icon-button
@@ -108,11 +118,11 @@
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="onEdit(org)">
               <mat-icon>edit</mat-icon>
-              Duzenle
+              <span translate> edit</span>
             </button>
             <button mat-menu-item (click)="onDelete(org)">
               <mat-icon>delete</mat-icon>
-              Sil
+              <span translate> delete</span>
             </button>
           </mat-menu>
         </td>
@@ -122,7 +132,7 @@
       <tr mat-row *matRowDef="let org; columns: displayedColumns"></tr>
 
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">Sonuc Bulunamadi</td>
+        <td class="mat-cell" colspan="4" translate>resaultNotFound</td>
       </tr>
     </table>
     <mat-paginator
@@ -130,7 +140,6 @@
       [pageSize]="pageSize"
       [length]="totalItemsCount"
       (page)="pageChanged($event)"
-      aria-label="Sayfa Secin"
     ></mat-paginator>
   </div>
 </div>

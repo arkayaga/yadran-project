@@ -47,6 +47,8 @@ export class OrganizationCopyComponent {
   searchField = new FormControl();
   searchValue = '';
 
+  public count = 10;
+
   constructor(
     private router: Router,
     private orgService: OrganizationService,
@@ -64,43 +66,49 @@ export class OrganizationCopyComponent {
 
         this.loadData();
         this.paginator.firstPage();
-
       });
+
   }
 
   table = [
-    { columnDef: 'org', header: 'Organizasyon', cellDef: 'code', type: "text" },
+    {
+      columnDef: 'org',
+      header: 'organizations',
+      cellDef: 'code',
+      type: "text"
+    },
     {
       columnDef: 'orgSD',
-      header: 'Organizasyon Tarihi',
+      header: 'organizationDate',
       cellDef: 'organizationStartDate',
       type: 'date'
     },
     {
       columnDef: 'orgStatus',
-      header: 'Org. Durumu',
+      header: 'organizationStatus',
       cellDef: 'organizationStatus',
       type: 'text'
     },
     {
       columnDef: 'contractDate',
-      header: 'Sözleşme Tarihi',
+      header: 'contDate',
       cellDef: 'contractDate',
       type: 'date'
     },
     {
       columnDef: 'contactPFN',
-      header: 'Müşteri',
+      header: 'contactPersonFullName',
       cellDef: 'contactPersonFullName',
       type: 'text'
     },
     {
       columnDef: 'customerMP',
-      header: 'Müşteri Telefonu',
+      header: 'customerMobilePhone',
       cellDef: 'customerMobilePhone',
       type: 'text'
     }
   ];
+
 
   // ngAfterViewInit() {
   //   this.dataSource.sort = this.sort;
@@ -172,7 +180,7 @@ export class OrganizationCopyComponent {
 
   loadData() {
     this.isLoading = true;
-    this.orgService.filterOrgs(this.getRequest()).subscribe((reses :any) => {
+    this.orgService.filterOrgs(this.getRequest()).subscribe((reses: any) => {
       this.orgs = reses.data;
       this.dataSource.data = this.orgs;
       this.totalItemsCount = reses.pagination.totalItemsCount

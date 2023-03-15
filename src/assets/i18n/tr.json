@@ -1,0 +1,25 @@
+{
+  "tr": "Türkçe",
+  "en": "English",
+  "changeLanguage": "Dili değiştir",
+  "dateRange": "Tarih Aralığı",
+  "organizationStatus": "Organizasyon Durumu",
+  "clear": "Temizle",
+  "sort": "Sorgula",
+  "organizations": "Organizasyonlar",
+  "organizationDate": "Organizasyon Tarihi",
+  "contDate": "Sözleşme Tarihi",
+  "contactPersonFullName": "Müşteri",
+  "customerMobilePhone": "Müşteri Telefonu",
+  "search": "Arama",
+  "operate": "İşlem",
+  "edit": "Duzenle",
+  "delete": "Sil",
+  "resaultNotFound": "Sonuc Bulunamadı",
+  "example3": {
+    "column.header": "Örnek 3 başlık",
+    "title.subtitle": "Örnek 3 alt başlık"
+  },
+  "ALI_GOT_APPLES_WHILE_GOING_HOME": "Ali eve giderken {{customValue}} tane elma aldı",
+  "example5.fromTypeScript": "Örnek 5"
+}

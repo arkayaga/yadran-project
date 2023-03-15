@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
@@ -7,6 +9,9 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  language = new FormControl('tr');
+  langs = [];
+
   links = [
     { label: 'Organizasyon', path: '/organization' },
     { label: 'Organizasyon Kopya', path: '/organization-copy' },
@@ -15,12 +20,19 @@ export class HeaderComponent {
 
   constructor(
     private authService: AuthService,
-  ) { }
+    public translate: TranslateService
+  ) {
+    this.langs = this.translate.getLangs();
+    console.log(translate.getLangs())
+  }
 
   onLogout() {
     this.authService.logout();
   }
 
+  switchLang(lang: string) {
+    this.translate.use(lang);
+  }
 }
 
 

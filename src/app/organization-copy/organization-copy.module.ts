@@ -15,7 +15,8 @@ import { OrganizationCopyRoutingModule } from './organization-copy-routing.modul
     OrganizationCopyRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
   ],
 })
 export class OrganizationCopyModule { }
+

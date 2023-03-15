@@ -1,0 +1,25 @@
+{
+  "tr": "Türkçe",
+  "en": "English",
+  "changeLanguage": "Change language",
+  "dateRange": "Date Range",
+  "organizationStatus": "Organization Status",
+  "clear": "Clear",
+  "sort": "Sort",
+  "organizations": "Organizations",
+  "organizationDate": "Organizations Date",
+  "contDate": "Contract Date",
+  "contactPersonFullName": "Customer",
+  "customerMobilePhone": "Customer Phone Number",
+  "search": "Search",
+  "operate": "Operate",
+  "edit": "Edit",
+  "delete": "Delete",
+  "resaultNotFound": "Resault Not Found",
+  "table": {
+    "column.header": "Example 3 title",
+    "title.subtitle": "Example 3 sub title"
+  },
+  "ALI_GOT_APPLES_WHILE_GOING_HOME": "Ali got {{customValue}} apples while going home",
+  "example5.fromTypeScript": "Example 5"
+}

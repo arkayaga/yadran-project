@@ -22,6 +22,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorService } from "./utilities/mat-paginator.service";
+import { TranslateModule } from "@ngx-translate/core";
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { MatPaginatorService } from "./utilities/mat-paginator.service";
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
+        TranslateModule
     ],
     exports: [
         SearchPipe,
@@ -53,11 +55,12 @@ import { MatPaginatorService } from "./utilities/mat-paginator.service";
         MatSortModule,
         MatTabsModule,
         MatCardModule,
+        TranslateModule
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' },
-        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' }},
-        { provide: MatPaginatorIntl, useClass: MatPaginatorService}
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+        { provide: MatPaginatorIntl, useClass: MatPaginatorService }
     ]
 })
 
