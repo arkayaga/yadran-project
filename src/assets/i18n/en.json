@@ -1,7 +1,7 @@
 {
   "tr": "Türkçe",
   "en": "English",
-  "changeLanguage": "Change language",
+  "changeLanguage": "Change Language: ",
   "dateRange": "Date Range",
   "organizationStatus": "Organization Status",
   "clear": "Clear",

@@ -6,4 +6,17 @@
     background-color: skyblue;
     color: white;
   }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    mat-button-toggle-group {
+      display: flex;
+      align-items: center;
+      margin: 10px;
+      border-radius: 5px;
+      font-size: small;
+      height: 35px;
+    }
+  }
 }

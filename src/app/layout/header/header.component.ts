@@ -23,7 +23,6 @@ export class HeaderComponent {
     public translate: TranslateService
   ) {
     this.langs = this.translate.getLangs();
-    console.log(translate.getLangs())
   }
 
   onLogout() {

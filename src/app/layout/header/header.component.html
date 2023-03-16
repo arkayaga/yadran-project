@@ -9,7 +9,7 @@
     >
   </div>
 
-  <mat-form-field appearance="fill">
+  <!-- <mat-form-field appearance="fill">
     <mat-label translate>changeLanguage</mat-label>
     <mat-select
       [formControl]="language"
@@ -19,14 +19,27 @@
         {{ lang | translate }}
       </mat-option>
     </mat-select>
-  </mat-form-field>
+  </mat-form-field> -->
+  
+  <div class="btn">
+    <ng-container>
+      <mat-button-toggle-group
+        [formControl]="language"
+        (change)="switchLang(language.value)"
+      >
+        <mat-button-toggle *ngFor="let lang of langs" [value]="lang">{{
+          lang | translate
+        }}</mat-button-toggle>
+      </mat-button-toggle-group>
+    </ng-container>
 
-  <button mat-raised-button type="button" class="button" (click)="onLogout()">
-    Logout
-  </button>
+    <button mat-raised-button type="button" class="button" (click)="onLogout()">
+      Logout
+    </button>
+  </div>
 </mat-toolbar>
 
-<nav mat-tab-nav-bar [tabPanel]="tabPanel" >
+<nav mat-tab-nav-bar [tabPanel]="tabPanel">
   <a
     mat-tab-link
     *ngFor="let link of links"
@@ -37,5 +50,5 @@
   >
     {{ link.label }}
   </a>
-  <mat-tab-nav-panel #tabPanel ></mat-tab-nav-panel>
+  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 </nav>

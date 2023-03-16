@@ -22,6 +22,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorService } from "./utilities/mat-paginator.service";
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { TranslateModule } from "@ngx-translate/core";
 
 
@@ -55,6 +56,7 @@ import { TranslateModule } from "@ngx-translate/core";
         MatSortModule,
         MatTabsModule,
         MatCardModule,
+        MatButtonToggleModule,
         TranslateModule
     ],
     providers: [
