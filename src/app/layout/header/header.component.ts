@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { SidenavService } from '../../core/sidenav.service';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+
   language = new FormControl('tr');
   langs = [];
 
@@ -20,7 +22,8 @@ export class HeaderComponent {
 
   constructor(
     private authService: AuthService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private sidenav: SidenavService
   ) {
     this.langs = this.translate.getLangs();
   }
@@ -31,6 +34,10 @@ export class HeaderComponent {
 
   switchLang(lang: string) {
     this.translate.use(lang);
+  }
+
+  onToggle() {
+    this.sidenav.toggle();
   }
 }
 

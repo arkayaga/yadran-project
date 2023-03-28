@@ -1,51 +1,60 @@
 .sidenav {
-  height: 95%;
+  height: 100vh;
+  min-width: 80px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   overflow: hidden;
 
-  .link {
+  mat-nav-list {
     display: flex;
     flex-direction: column;
-    align-content: stretch;
+    justify-content: space-between;
+    height: 100vh;
+    margin-bottom: 15px;
 
-    a {
+    .link {
+      display: flex;
+      flex-direction: column;
+      align-content: stretch;
+
+      a {
+        border-radius: 0;
+      }
       border-radius: 0;
-    }
-    border-radius: 0;
 
-    mat-expansion-panel {
-      border-radius: 0;
+      mat-expansion-panel {
+        border-radius: 0;
 
-      mat-expansion-panel-header {
-        height: 40px;
+        mat-expansion-panel-header {
+          height: 40px;
 
-        ::ng-deep .mat-content{
-          justify-content:center
+          ::ng-deep .mat-content {
+            justify-content: center;
+          }
+        }
+
+        ::ng-deep .mat-expansion-panel-body {
+          padding: 0;
+        }
+
+        ::ng-deep .mat-action-row {
+          flex-direction: column;
+          border-top-style: none;
+          padding: 0;
+
+          ::ng-deep .mat-mdc-button-base {
+            margin: 5px 0;
+            border-radius: 0;
+          }
         }
       }
 
-      ::ng-deep .mat-expansion-panel-body {
-        padding: 0;
+      a.active {
+        background-color: skyblue;
+        color: white;
       }
-
-      ::ng-deep .mat-action-row {
-        flex-direction: column;
-        border-top-style: none;
-        padding: 0;
-
-        ::ng-deep .mat-mdc-button-base {
-          margin: 5px 0;
-          border-radius: 0;
-        }
-      }
-    }
-
-    a.active {
-      background-color: skyblue;
-      color: white;
     }
   }
 

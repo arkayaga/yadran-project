@@ -1,5 +1,8 @@
 <mat-toolbar class="topnav">
   <div class="link">
+    <button mat-icon-button (click)="onToggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
     <a
       mat-button
       routerLinkActive="active"
@@ -20,7 +23,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field> -->
-  
+
   <div class="btn">
     <ng-container>
       <mat-button-toggle-group

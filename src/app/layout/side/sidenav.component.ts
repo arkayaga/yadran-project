@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { SidenavService } from '../../core/sidenav.service';
 import { AuthService } from '../../auth/auth.service';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-sidenav',
@@ -7,8 +9,12 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent {
+  checked = true;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    public sidenav: SidenavService
+  ) { }
 
   menu = [
     { url: "/place-list", name: 'Mekanlar' },
@@ -23,6 +29,26 @@ export class SidenavComponent {
     this.authService.logout();
   }
 
+  onChecked(event: MatCheckboxChange) {
+    this.checked = event.checked
+    this.sidenav.setValue(event.checked)
+  }
+
+
+  mouseover(event: MouseEvent) {
+    // console.log(event)
+    if (event.type === 'mouseover') {
+      if (this.checked === false) {
+        this.checked = true
+      }
+    }
+  };
+
+  mouseout() {
+    //   if (this.checked === true) {
+    //     this.checked = false
+    //   }
+  };
 }
 
 

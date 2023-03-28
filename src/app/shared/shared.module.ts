@@ -1,7 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { SearchPipe } from "./pipes/search.pipe";
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -14,7 +13,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,13 +21,14 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorService } from "./utilities/mat-paginator.service";
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TranslateModule } from "@ngx-translate/core";
+import { MatListModule } from '@angular/material/list';
 
 
 @NgModule({
     declarations: [
-        SearchPipe,
+        // SearchPipe,
     ],
     imports: [
         CommonModule,
@@ -37,7 +37,7 @@ import { TranslateModule } from "@ngx-translate/core";
         TranslateModule
     ],
     exports: [
-        SearchPipe,
+        // SearchPipe,
         MatTableModule,
         MatButtonModule,
         MatInputModule,
@@ -57,12 +57,13 @@ import { TranslateModule } from "@ngx-translate/core";
         MatTabsModule,
         MatCardModule,
         MatButtonToggleModule,
+        MatListModule,
         TranslateModule
     ],
     providers: [
-        { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' },
+        // { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' },
         { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
-        { provide: MatPaginatorIntl, useClass: MatPaginatorService }
+        { provide: MatPaginatorIntl, useClass: MatPaginatorService },
     ]
 })
 

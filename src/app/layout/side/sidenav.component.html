@@ -1,4 +1,51 @@
-<div class="sidenav">
+<div
+  class="sidenav"
+  (mouseover)="mouseover($event)"
+  (mouseover)="mouseout()"
+
+>
+  <mat-checkbox checked (change)="onChecked($event)"></mat-checkbox>
+  <mat-nav-list>
+    <div class="link">
+      <a
+        mat-list-item
+        routerLinkActive="active"
+        routerLink="/"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon mat-list-icon>home</mat-icon>
+        <mat-label matLine *ngIf="checked"> Ana Sayfa </mat-label>
+      </a>
+      <a
+        mat-list-item
+        matLine
+        routerLinkActive="active"
+        routerLink="/organization"
+      >
+        <mat-icon mat-list-icon>bookmark</mat-icon>
+        <mat-label matLine *ngIf="checked">Organizasyon</mat-label>
+      </a>
+      <a>
+        <mat-icon mat-list-icon *ngIf="!checked">filter_list</mat-icon>
+        <mat-expansion-panel *ngIf="checked">
+          <mat-expansion-panel-header matLine
+            ><mat-icon mat-list-icon>filter_list</mat-icon> Yonetim Paneli
+          </mat-expansion-panel-header>
+          <mat-action-row *ngFor="let item of menu">
+            <a mat-button routerLinkActive="active" routerLink="{{ item.url }}">
+              {{ item.name }}
+            </a>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </a>
+    </div>
+
+    <button mat-raised-button type="button" class="button" (click)="onLogout()">
+      Cikis
+    </button>
+  </mat-nav-list>
+</div>
+<!-- <div class="sidenav">
   <div class="link">
     <a
       mat-button
@@ -10,19 +57,17 @@
     <a mat-button routerLinkActive="active" routerLink="/organization"
       >Organizasyon</a
     >
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          Yonetim Paneli
-        </mat-expansion-panel-header>
-        <mat-action-row *ngFor="let item of menu">
-          <a mat-button routerLinkActive="active" routerLink="{{ item.url }}">
-            {{ item.name }}
-          </a>
-        </mat-action-row>
-      </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header> Yonetim Paneli </mat-expansion-panel-header>
+      <mat-action-row *ngFor="let item of menu">
+        <a mat-button routerLinkActive="active" routerLink="{{ item.url }}">
+          {{ item.name }}
+        </a>
+      </mat-action-row>
+    </mat-expansion-panel>
   </div>
 
   <button mat-raised-button type="button" class="button" (click)="onLogout()">
     Cikis
   </button>
-</div>
+</div> -->

@@ -5,7 +5,7 @@ import { SharedModule } from "../shared/shared.module";
 import { RouterModule } from "@angular/router";
 import { HeaderComponent } from "./header/header.component";
 import { SidenavComponent } from "./side/sidenav.component";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -17,9 +17,8 @@ import { ReactiveFormsModule } from "@angular/forms";
         CommonModule,
         SharedModule,
         RouterModule,
+        FormsModule,
         ReactiveFormsModule,
-        SharedModule,
-
     ],
     exports: [
         LayoutComponent,
