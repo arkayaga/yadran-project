@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Organization, OrganizationFilter } from './organization.model';
-import { Response } from '../api.model';
+import { Response } from '../api/api.model';
 
 
 @Injectable({

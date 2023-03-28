@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Reservation } from './reservation.model';
-import { Response } from '../api.model';
+import { Response } from '../api/api.model';
 
 
 @Injectable({
@@ -31,7 +31,6 @@ export class ReservationTypeService {
 
   deleteResType(id: string): Observable<Response<Reservation>> {
     return this.http.delete<Response<Reservation>>(this.url + '/' + id)
-
   }
 
 }

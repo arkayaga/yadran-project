@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrganizationCost } from './organization-cost.model';
-import { Response } from '../api.model';
+import { Response } from '../api/api.model';
 
 
 @Injectable({
