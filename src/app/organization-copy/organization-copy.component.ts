@@ -11,6 +11,7 @@ import { OrganizationStatusService } from '../core/organization-status/organizat
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { debounceTime } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-organization-copy',
@@ -55,6 +56,7 @@ export class OrganizationCopyComponent {
     private orgStatus: OrganizationStatusService,
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
+    public translateService: TranslateService
   ) {
     this.initForm();
     this.getStatus();
