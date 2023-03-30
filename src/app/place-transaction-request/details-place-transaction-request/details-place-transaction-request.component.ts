@@ -15,7 +15,7 @@ export class DetailsPlaceTransactionRequestComponent {
   id: string;
   places = [];
   display = true
-  fileToUpload: File | null = null;
+  fileToUpload: File
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,6 +41,7 @@ export class DetailsPlaceTransactionRequestComponent {
       placeId: [null, [Validators.required]],
       amount: [null, [Validators.required]],
       description: [null, [Validators.required]],
+      safeName: [null],
       fileName: [null],
 
     })
@@ -74,8 +75,6 @@ export class DetailsPlaceTransactionRequestComponent {
 
   }
 
-
-
   onSave() {
     this.form.markAllAsTouched();
     if (this.form.valid) {
@@ -88,10 +87,7 @@ export class DetailsPlaceTransactionRequestComponent {
         formData.append('FormFile', this.fileToUpload, this.fileToUpload.name);
       }
 
-      this.placeTRService.addPlaceTransactionRequest(formData).subscribe((x) => {
-        console.log(x)
-        this.dialogRef.close();
-      })
+      this.placeTRService.addPlaceTransactionRequest(formData).subscribe(() => this.dialogRef.close())
     }
   }
 
