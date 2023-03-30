@@ -11,6 +11,7 @@ import { PlaceTransactionRequestService } from '../../core/place-transaction-req
 })
 export class DetailsPlaceTransactionRequestComponent {
   form: FormGroup;
+  header: string = 'Talep Olustur'
   reqs = [];
   id: string;
   places = [];
@@ -28,6 +29,7 @@ export class DetailsPlaceTransactionRequestComponent {
 
     if (this.data && data !== 'new') {
       this.form.disable()
+      this.header = 'Talep Goruntule'
       this.id = data;
       this.getDetail();
     }
