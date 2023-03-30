@@ -147,9 +147,6 @@ export class OrganizationComponent {
     })
   }
 
-  // tslint:disable-next-line:no-empty
-  onSearch() { }
-
   initForm() {
     this.form = this.formBuilder.group({
       start: [null],

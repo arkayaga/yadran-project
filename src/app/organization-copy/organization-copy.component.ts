@@ -195,7 +195,6 @@ export class OrganizationCopyComponent {
     this.currentPage = event.pageIndex + 1;
     this.skip = this.take * event.pageIndex;
     this.loadData();
-
   }
 
   // customPagination() {
