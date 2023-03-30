@@ -25,6 +25,16 @@
         <mat-icon mat-list-icon>bookmark</mat-icon>
         <mat-label matLine *ngIf="checked">Organizasyon</mat-label>
       </a>
+
+      <a
+        mat-list-item
+        matLine
+        routerLinkActive="active"
+        routerLink="/place-transaction-request"
+      >
+        <mat-icon mat-list-icon>bookmark</mat-icon>
+        <mat-label matLine *ngIf="checked">Gider Talepleri</mat-label>
+      </a>
       <a>
         <mat-icon mat-list-icon *ngIf="!checked">filter_list</mat-icon>
         <mat-expansion-panel *ngIf="checked">

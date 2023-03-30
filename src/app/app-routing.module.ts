@@ -21,6 +21,7 @@ const routes: Routes = [
       { path: 'reservation-type', loadChildren: () => import('./reservation-type/reservation-type.module').then(m => m.ReservationTypeModule) },
       { path: 'organization-type', loadChildren: () => import('./organization-type/organization-type.module').then(m => m.OrganizationTypeModule) },
       { path: 'organization-status', loadChildren: () => import('./organization-status/organization-status.module').then(m => m.OrganizationStatusModule) },
+      { path: 'place-transaction-request', loadChildren: () => import('./place-transaction-request/place-transaction-request.module').then(m => m.PlaceTransactionRequestModule) },
 
     ]
   },
