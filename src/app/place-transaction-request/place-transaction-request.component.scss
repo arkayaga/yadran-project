@@ -1,0 +1,9 @@
+table {
+    ::ng-deep .mat-mdc-row:hover {
+      background-color: rgb(238, 237, 237);
+      transition: 0.5s;
+    }
+    ::ng-deep .mat-mdc-row {
+      cursor: pointer;
+    }
+  }
