@@ -76,10 +76,7 @@
         *ngFor="let column of table"
         [matColumnDef]="column.columnDef"
       >
-        <ng-container
-          *ngIf="column.type === 'date'"
-          matColumnDef="{{ column.header }}"
-        >
+        <ng-container *ngIf="column.type === 'date'">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{ column.header | translate }}
           </th>
@@ -88,15 +85,22 @@
           </td>
         </ng-container>
 
-        <ng-container
-          *ngIf="column.type === 'text'"
-          matColumnDef="{{ column.header }}"
-        >
+        <ng-container *ngIf="column.type === 'text'">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{ column.header | translate }}
           </th>
           <td mat-cell *matCellDef="let row">
             {{ row[column.cellDef] }}
+            {{ row[column.cellDef].name }}
+          </td>
+        </ng-container>
+
+        <ng-container *ngIf="column.type === 'status'">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ column.header | translate }}
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row[column.cellDef].name }}
           </td>
         </ng-container>
       </ng-container>

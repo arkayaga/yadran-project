@@ -89,7 +89,7 @@ export class OrganizationCopyComponent {
       columnDef: 'orgStatus',
       header: 'organizationStatus',
       cellDef: 'organizationStatus',
-      type: 'text'
+      type: 'status'
     },
     {
       columnDef: 'contractDate',
