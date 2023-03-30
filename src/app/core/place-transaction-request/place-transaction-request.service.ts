@@ -20,8 +20,16 @@ export class PlaceTransactionRequestService {
     return this.http.get<Response<PlaceTransactionRequest>>(this.url + '/' + id)
   }
 
+  // downloadFile(id: string): Observable<Response<PlaceTransactionRequest>> {
+  //   return this.http.get<Response<PlaceTransactionRequest>>(this.url + '/uploads/' + id)
+  // }
+
   addPlaceTransactionRequest(value: FormData): Observable<Response<PlaceTransactionRequest[]>> {
     return this.http.post<Response<PlaceTransactionRequest[]>>(this.url, value)
+  }
+
+  approvePlaceTransactionRequest(id: string): Observable<Response<PlaceTransactionRequest>> {
+    return this.http.post<Response<PlaceTransactionRequest>>(this.url + '/ApproveTransaction/' + id, {})
   }
 
   deletePlaceTransactionRequest(id: string): Observable<Response<PlaceTransactionRequest>> {
