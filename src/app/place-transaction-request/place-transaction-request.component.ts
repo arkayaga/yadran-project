@@ -7,6 +7,7 @@ import { PlaceTransactionRequestService } from '../core/place-transaction-reques
 import { PlaceTransactionRequest } from '../core/place-transaction-request/place-transaction-request.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DetailsPlaceTransactionRequestComponent } from './details-place-transaction-request/details-place-transaction-request.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-place-transaction-request',
@@ -58,7 +59,7 @@ export class PlaceTransactionRequestComponent {
       columnDef: 'user',
       header: 'Talep Eden',
       cellDef: 'user',
-      type: 'text'
+      type: 'user'
     },
     {
       columnDef: 'amount',
@@ -70,7 +71,7 @@ export class PlaceTransactionRequestComponent {
       columnDef: 'isConfirm',
       header: 'Durum',
       cellDef: 'isConfirm',
-      type: 'text'
+      type: 'boolean'
     },
   ];
 
@@ -89,14 +90,34 @@ export class PlaceTransactionRequestComponent {
 
   onAdd() {
     const dialogRef = this.dialog.open(DetailsPlaceTransactionRequestComponent)
-    dialogRef.afterClosed().subscribe(() => {
-      this.loadData();
+    dialogRef.afterClosed().subscribe(() => this.loadData());
+  }
+
+  onConfirm(req) {
+    this.placeTRService.approvePlaceTransactionRequest(req.id).subscribe(() => this.loadData())
+  }
+
+  onDelete(req) {
+    Swal.fire({
+      title: 'Silmek istediginize emin misiniz?',
+      text: 'Bu islem geri alinamaz!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Evet, Sil',
+      cancelButtonText: 'Vazgec!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.placeTRService.deletePlaceTransactionRequest(req.id).subscribe(() => {
+          Swal.fire('Silindi!', '', 'success');
+          this.loadData();
+        });
+      } else {
+        Swal.fire('Vazgecildi', '', 'info');
+      }
     });
   }
-  // tslint:disable-next-line:no-empty
-  onConfirm() { }
-  // tslint:disable-next-line:no-empty
-  onDelete() { }
 
   getConfirm() {
     this.placeTRService.getPlaceTransactionRequests().subscribe(res => {
