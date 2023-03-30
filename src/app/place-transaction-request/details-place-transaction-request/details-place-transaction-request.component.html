@@ -1,0 +1,39 @@
+<div mat-dialog-content class="dialog-container">
+  <h3 mat-dialog-title>Talep Görüntüle</h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSave()">
+    <div class="form-group">
+      <mat-form-field class="form-element">
+        <mat-label>Salon / Mekan Adi</mat-label>
+        <mat-select formControlName="placeId">
+          <mat-option *ngFor="let place of places" [value]="place.id">
+            {{ place.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <mat-label>Miktar</mat-label>
+        <input type="number" matInput formControlName="amount" />
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <mat-label>Aciklama</mat-label>
+        <input maxlength="256" matInput formControlName="description" />
+      </mat-form-field>
+
+      <div *ngIf="display">
+        <label for="file">Dosya Secin</label>
+        <input
+          type="file"
+          formControlName="fileName"
+          (change)="onFileChange($event)"
+        />
+      </div>
+    </div>
+
+    <div class="action-btn">
+      <button *ngIf="display" class="btnSave" mat-raised-button type="submit">Kaydet</button>
+    </div>
+  </form>
+</div>
