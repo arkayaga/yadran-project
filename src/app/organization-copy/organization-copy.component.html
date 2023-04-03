@@ -1,6 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="loadData()">
   <mat-card class="filter">
-    <div>
+    <div class="form-group">
       <mat-form-field class="detail">
         <mat-label translate>dateRange</mat-label>
         <mat-date-range-input [rangePicker]="picker" formGroupName="range">
@@ -27,7 +27,7 @@
         </mat-select></mat-form-field
       >
     </div>
-    <div>
+    <div class="btn">
       <button
         mat-raised-button
         type="button"
@@ -47,25 +47,20 @@
 
 <mat-card class="container">
   <mat-card-content class="searchbox">
-    <mat-label translate> organizations </mat-label>
-    <mat-form-field class="search">
-      <mat-icon matPrefix>search</mat-icon>
-      <input
-        matInput
-        placeholder="{{ 'search' | translate }}"
-        [formControl]="searchField"
-      />
-      <!-- <button
-        *ngIf="searchValue"
-        matSuffix
-        mat-icon-button
-        (click)="searchValue = ''"
-        >
-        <mat-icon>close</mat-icon>
-      </button> -->
-    </mat-form-field>
+    <div>
+      <mat-label translate> organizations </mat-label>
+      <mat-card>
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          class="search"
+          matInput
+          placeholder="{{ 'search' | translate }}"
+          [formControl]="searchField"
+        />
+      </mat-card>
+    </div>
 
-    <button mat-mini-fab color="primary" (click)="onNew()">
+    <button mat-mini-fab color="primary" (click)="onAdd()">
       <mat-icon>add</mat-icon>
     </button>
   </mat-card-content>

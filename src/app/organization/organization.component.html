@@ -37,16 +37,19 @@
 
 <div class="container">
   <mat-card-content class="searchbox">
-    <mat-label>Organizasyonlar </mat-label>
-    <mat-form-field class="search">
-      <mat-icon matPrefix>search</mat-icon>
-      <input
-        matInput
-        placeholder="Arama"
-        (keyup)="applyFilter($event)"
-        #input
-      />
-    </mat-form-field>
+    <div>
+      <mat-label>Organizasyonlar </mat-label>
+      <mat-card>
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          class="search"
+          matInput
+          placeholder="Arama"
+          (keyup)="applyFilter($event)"
+          #input
+        />
+      </mat-card>
+    </div>
 
     <button mat-mini-fab color="primary" (click)="onNew()">
       <mat-icon>add</mat-icon>
