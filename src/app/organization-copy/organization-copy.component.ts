@@ -19,14 +19,14 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./organization-copy.component.scss'],
 })
 export class OrganizationCopyComponent {
-  form: FormGroup
-  orgs = [];
+  form: FormGroup;
+  orgs: Organization[] = [];
   status = [];
   isLoading = false;
   organizationStatusId: string;
   beginDate: string;
   endDate: string;
-  totalItemsCount: number;
+  totalItemsCount = 0;
   skip = 0;
   take = 5;
   currentPage = 0;
@@ -39,16 +39,55 @@ export class OrganizationCopyComponent {
     'contractDate',
     'contactPFN',
     'customerMP',
-    'button'
+    'button',
   ];
-  dataSource = new MatTableDataSource<Organization>();
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  dataSource = new MatTableDataSource<Organization>(this.orgs);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   searchField = new FormControl();
   searchValue = '';
 
-  public count = 10;
+  count = 10;
+
+  table = [
+    {
+      columnDef: 'org',
+      header: 'organizations',
+      cellDef: 'code',
+      type: 'text',
+    },
+    {
+      columnDef: 'orgSD',
+      header: 'organizationDate',
+      cellDef: 'organizationStartDate',
+      type: 'date',
+    },
+    {
+      columnDef: 'orgStatus',
+      header: 'organizationStatus',
+      cellDef: 'organizationStatus',
+      type: 'status',
+    },
+    {
+      columnDef: 'contractDate',
+      header: 'contDate',
+      cellDef: 'contractDate',
+      type: 'date',
+    },
+    {
+      columnDef: 'contactPFN',
+      header: 'contactPersonFullName',
+      cellDef: 'contactPersonFullName',
+      type: 'text',
+    },
+    {
+      columnDef: 'customerMP',
+      header: 'customerMobilePhone',
+      cellDef: 'customerMobilePhone',
+      type: 'text',
+    },
+  ];
 
   constructor(
     private router: Router,
@@ -62,77 +101,31 @@ export class OrganizationCopyComponent {
     this.getStatus();
     this.loadData();
 
-    this.searchField.valueChanges.pipe(
-      debounceTime(500)).subscribe(value => {
-        this.searchValue = value
+    this.searchField.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe((value) => {
+        this.searchValue = value;
 
         this.loadData();
         this.paginator.firstPage();
       });
-
   }
-
-  table = [
-    {
-      columnDef: 'org',
-      header: 'organizations',
-      cellDef: 'code',
-      type: "text"
-    },
-    {
-      columnDef: 'orgSD',
-      header: 'organizationDate',
-      cellDef: 'organizationStartDate',
-      type: 'date'
-    },
-    {
-      columnDef: 'orgStatus',
-      header: 'organizationStatus',
-      cellDef: 'organizationStatus',
-      type: 'status'
-    },
-    {
-      columnDef: 'contractDate',
-      header: 'contDate',
-      cellDef: 'contractDate',
-      type: 'date'
-    },
-    {
-      columnDef: 'contactPFN',
-      header: 'contactPersonFullName',
-      cellDef: 'contactPersonFullName',
-      type: 'text'
-    },
-    {
-      columnDef: 'customerMP',
-      header: 'customerMobilePhone',
-      cellDef: 'customerMobilePhone',
-      type: 'text'
-    }
-  ];
-
-
-  // ngAfterViewInit() {
-  //   this.dataSource.sort = this.sort;
-  // }
 
   getStatus() {
-    this.orgStatus.getOrgsStatus().subscribe(status => {
-      this.status = status.data
-    })
+    this.orgStatus.getOrgsStatus().subscribe((status) => {
+      this.status = status.data;
+    });
   }
 
-  onNew() {
+  onAdd() {
     this.router.navigate(['organization/new']);
-
   }
 
-  onEdit(org) {
-    this.router.navigate(['organization/' + org.id])
-
+  onEdit(org: Organization) {
+    this.router.navigate(['organization/' + org.id]);
   }
 
-  onDelete(org) {
+  onDelete(org: Organization) {
     Swal.fire({
       title: 'Silmek istediginize emin misiniz?',
       text: 'Bu islem geri alinamaz!',
@@ -160,8 +153,8 @@ export class OrganizationCopyComponent {
         beginDate: [null],
         endDate: [null],
       }),
-      organizationStatusId: [null]
-    })
+      organizationStatusId: [null],
+    });
   }
 
   getRequest() {
@@ -174,10 +167,10 @@ export class OrganizationCopyComponent {
       organizationStatusId: this.form.get('organizationStatusId').value,
       beginDate: beginDate ? moment(beginDate) : null,
       endDate: endDate ? moment(endDate) : null,
-      search: this.searchValue
-    }
+      search: this.searchValue,
+    };
 
-    return request
+    return request;
   }
 
   loadData() {
@@ -185,55 +178,17 @@ export class OrganizationCopyComponent {
     this.orgService.filterOrgs(this.getRequest()).subscribe((reses: any) => {
       this.orgs = reses.data;
       this.dataSource.data = this.orgs;
-      this.totalItemsCount = reses.pagination.totalItemsCount
-    }).add(() => this.isLoading = false);
+      this.totalItemsCount = reses.pagination.totalItemsCount;
+      this.isLoading = false;
+    });
   }
 
-  pageChanged(event: PageEvent) {
-    console.log({ event });
+  pageChanged(event: PageEvent): void {
     this.take = event.pageSize;
     this.currentPage = event.pageIndex + 1;
     this.skip = this.take * event.pageIndex;
     this.loadData();
   }
-
-  // customPagination() {
-  //   const paginator = this.paginator._intl
-  //   paginator.itemsPerPageLabel = 'Gosterim ';
-  //   paginator.nextPageLabel = 'Sonraki Sayfa ';
-  //   paginator.previousPageLabel = 'Onceki Sayfa ';
-
-  //   paginator.getRangeLabel = (page: number, pageSize: number, length: number) => {
-  //     if (length === 0 || pageSize === 0) {
-  //       return `Kayit bulunamadi.`;
-  //     }
-  //     length = Math.max(length, 0);
-  //     const startIndex = page;
-  //     return `${length} kayit icerisinden ${startIndex + 1}. sayfa  `;
-  //   }
-  // }
-
-  // onFind() {
-  //   this.organizationStatusId = this.form.get('organizationStatusId').value
-  //   this.beginDate = this.form.get('range.beginDate').value
-  //   // tslint:disable-next-line:no-console
-  //   console.log(moment(this.beginDate).format())
-  //   this.endDate = this.form.get('range.endDate').value
-
-  //   this.orgService.filterOrgs(this.getRequest()).subscribe(status => {
-
-  //     const item = status.data.filter(x => x.organizationStatusId === this.organizationStatusId)
-  //     // if (this.beginDate && this.endDate) {
-  //     //   return item.organizationStartDate >= this.beginDate && x.organizationEndDate <= this.endDate;
-  //     // }
-  //     // tslint:disable-next-line:no-console
-  //     console.log(item)
-  //     // tslint:disable-next-line:no-console
-  //     // console.log(beginDate)
-  //     this.orgs = item;
-  //     this.dataSource.data = this.orgs;
-  //   });
-  // };
 
   onClear() {
     this.form.reset();
@@ -241,10 +196,7 @@ export class OrganizationCopyComponent {
     this.skip = 0;
     this.take = 5;
 
-    this.loadData()
+    this.loadData();
     this.paginator.firstPage();
-
-  };
+  }
 }
-
-
