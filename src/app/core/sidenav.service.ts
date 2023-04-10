@@ -28,4 +28,9 @@ export class SidenavService {
   setValue(newValue): void {
     this.checked.next(newValue);
   }
+
+  // closeSidenav() {
+  //   this.checked.next(false);
+  // }
+
 }

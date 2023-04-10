@@ -36,7 +36,6 @@ export class SidenavComponent {
 
 
   mouseover(event: MouseEvent) {
-    // console.log(event)
     if (event.type === 'mouseover') {
       if (this.checked === false) {
         this.checked = true
@@ -44,10 +43,12 @@ export class SidenavComponent {
     }
   };
 
-  mouseout() {
-    //   if (this.checked === true) {
-    //     this.checked = false
-    //   }
+  mouseout(event: MouseEvent) {
+    if (this.checked === false) {
+      if (event.type === 'mouseout') {
+        this.checked = false
+      }
+    }
   };
 }
 

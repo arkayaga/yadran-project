@@ -1,9 +1,4 @@
-<div
-  class="sidenav"
-  (mouseover)="mouseover($event)"
-  (mouseover)="mouseout()"
-
->
+<div class="sidenav">
   <mat-checkbox checked (change)="onChecked($event)"></mat-checkbox>
   <mat-nav-list>
     <div class="link">
@@ -35,11 +30,12 @@
         <mat-icon mat-list-icon>bookmark</mat-icon>
         <mat-label matLine *ngIf="checked">Gider Talepleri</mat-label>
       </a>
-      <a>
+      
+      <a class="expansion-panel">
         <mat-icon mat-list-icon *ngIf="!checked">filter_list</mat-icon>
         <mat-expansion-panel *ngIf="checked">
-          <mat-expansion-panel-header matLine
-            ><mat-icon mat-list-icon>filter_list</mat-icon> Yonetim Paneli
+          <mat-expansion-panel-header matLine>
+            <mat-icon mat-list-icon>filter_list</mat-icon> Yonetim Paneli
           </mat-expansion-panel-header>
           <mat-action-row *ngFor="let item of menu">
             <a mat-button routerLinkActive="active" routerLink="{{ item.url }}">

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './organization-copy.component.html',
   styleUrls: ['./organization-copy.component.scss'],
 })
-export class OrganizationCopyComponent {
+export class OrganizationCopyComponent implements AfterViewInit {
   form: FormGroup;
   orgs: Organization[] = [];
   status = [];
@@ -109,6 +109,10 @@ export class OrganizationCopyComponent {
         this.loadData();
         this.paginator.firstPage();
       });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
   }
 
   getStatus() {
