@@ -31,8 +31,8 @@ export class TaskComponent {
     }
   }
 
-  onDelete() {
+  onDelete(index: number) {
     this.items = this.orderForm.get('items') as FormArray;
-    this.items.clear();
+    this.items.removeAt(index);
   }
 }
