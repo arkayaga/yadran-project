@@ -13,4 +13,5 @@ export interface Place {
     users: any;
     updatedAt: string;
     createdAt: string;
+    amount: number;
 }

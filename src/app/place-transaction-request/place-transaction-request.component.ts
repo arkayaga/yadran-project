@@ -35,13 +35,6 @@ export class PlaceTransactionRequestComponent {
   searchField = new FormControl();
   searchValue = '';
 
-  constructor(
-    private placeTRService: PlaceTransactionRequestService,
-    public dialog: MatDialog
-  ) {
-    this.loadData();
-  }
-
   table = [
     {
       columnDef: 'description',
@@ -74,6 +67,14 @@ export class PlaceTransactionRequestComponent {
       type: 'boolean'
     },
   ];
+
+  constructor(
+    private placeTRService: PlaceTransactionRequestService,
+    public dialog: MatDialog
+  ) {
+    this.loadData();
+  }
+
 
   loadData() {
     this.placeTRService.getPlaceTransactionRequests().subscribe(res => {
