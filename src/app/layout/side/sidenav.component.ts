@@ -17,6 +17,7 @@ export class SidenavComponent {
   ) { }
 
   menu = [
+    { url: "/place-transaction", name: 'Kasa Yonetimi' },
     { url: "/place-list", name: 'Mekanlar' },
     { url: "/organization-cost", name: 'Organizasyon Gelir Gider' },
     { url: "/reservation-type", name: 'Rezervasyon Tipi' },
