@@ -16,8 +16,8 @@ export class PlaceTransactionService {
     return this.http.get<Response<PlaceTransaction>>(this.url + '/GetPlaceTransactions/' + id)
   }
 
-  addMoneyToPlaceCashbox(request: string): Observable<Response<PlaceTransaction[]>> {
-    return this.http.post<Response<PlaceTransaction[]>>(this.url, request)
+  addMoneyToPlaceCashbox(request: any): Observable<Response<PlaceTransaction[]>> {
+    return this.http.post<Response<PlaceTransaction[]>>(this.url + '/AddMoneyToPlaceCashbox', request)
   }
 
   getPlaceCashboxAmount(id: string): Observable<Response<number>> {
