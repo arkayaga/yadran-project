@@ -5,11 +5,13 @@ import { PlaceTransactionRoutingModule } from './place-transaction-routing.modul
 import { PlaceTransactionComponent } from './place-transaction.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { DetailsPlaceTransactionComponent } from './details-place-transaction/details-place-transaction.component';
 
 
 @NgModule({
   declarations: [
-    PlaceTransactionComponent
+    PlaceTransactionComponent,
+    DetailsPlaceTransactionComponent
   ],
   imports: [
     CommonModule,
@@ -17,6 +19,9 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
+  ],
+  exports: [
+    DetailsPlaceTransactionComponent
   ]
 })
 export class PlaceTransactionModule { }

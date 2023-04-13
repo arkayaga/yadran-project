@@ -1,19 +1,24 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { PlaceService } from '../core/place/place.service';
 import { PlaceTransactionService } from '../core/place-transaction/place-transaction.service';
 import { PlaceTransaction } from '../core/place-transaction/place-transaction.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { Place } from '../core/place/place.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DetailsPlaceTransactionComponent } from './details-place-transaction/details-place-transaction.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { FormControl } from '@angular/forms';
+import * as XLSX from 'xlsx'
 
 @Component({
   selector: 'app-place-transaction',
   templateUrl: './place-transaction.component.html',
   styleUrls: ['./place-transaction.component.scss']
 })
-export class PlaceTransactionComponent {
+export class PlaceTransactionComponent implements AfterViewInit {
   places = [];
   placeId: string;
-  cashboxAmount: number;
   selectedPlace: Place;
   display: boolean = false;
   details = [];
@@ -26,6 +31,9 @@ export class PlaceTransactionComponent {
   ];
 
   dataSource = new MatTableDataSource<PlaceTransaction>();
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   table = [
     {
@@ -60,13 +68,31 @@ export class PlaceTransactionComponent {
     },
   ];
 
+  searchField = new FormControl();
+  searchValue = '';
+
+  fileName = 'KasaYonetimi-Detay.xlsx';
+
   constructor(
     private placeService: PlaceService,
     private placeTransaction: PlaceTransactionService,
-    // public dialog: MatDialog
+    public dialog: MatDialog
   ) {
     this.getPlaces();
-    // this.getPlaceCashboxAmount();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   getPlaces() {
@@ -83,7 +109,6 @@ export class PlaceTransactionComponent {
     this.placeTransaction.getPlaceCashboxAmount(id)
       .subscribe(
         (x: any) => {
-          console.log(x)
           const index = this.places.findIndex(plc => plc.id === id);
           this.places[index].amount = x.data
         });
@@ -93,10 +118,45 @@ export class PlaceTransactionComponent {
     this.selectedPlace = place
     this.placeTransaction.getPlaceTransactions(place.id)
       .subscribe((x: any) => {
-        console.log(x)
         this.details = x.data;
         this.dataSource.data = this.details;
       })
     this.display = true;
+  }
+
+  onSum(place) {
+    const dialogRef = this.dialog.open(DetailsPlaceTransactionComponent, {
+      data: place.id
+    })
+    dialogRef.componentInstance.isAdd = true;
+    dialogRef.afterClosed().subscribe((x: any) => {
+      this.selectedPlace.amount += x
+    });
+  }
+
+  onMinus(place) {
+    const dialogRef = this.dialog.open(DetailsPlaceTransactionComponent, {
+      data: place.id,
+      // data:
+      // {
+      //   placeId: place.id,
+      //   isAdd: Boolean,
+      //   description: String
+      // }
+    })
+    dialogRef.componentInstance.isAdd = false;
+    dialogRef.afterClosed().subscribe((x: any) => {
+      this.selectedPlace.amount -= x
+    });
+  }
+
+  exportexcel(): void {
+    const element = document.getElementById('excel-table');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    XLSX.writeFile(wb, this.fileName);
   }
 }

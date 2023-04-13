@@ -1,5 +1,6 @@
 .container-PT {
   margin: 20px;
+  margin-right: 40px;
 
   // display: flex;
   // flex-direction: row;
@@ -65,23 +66,27 @@
         flex-direction: column;
         margin-left: 20px;
 
-
-        button{
+        button {
           margin-bottom: 16px;
         }
       }
     }
 
-    .card-table {
-      padding: 0;
+    .container {
+      margin: 0;
 
-      .table {
-        ::ng-deep .mat-mdc-row:hover {
-          background-color: rgb(238, 237, 237);
-          transition: 0.1s;
-        }
-        ::ng-deep .mat-mdc-row {
-          cursor: pointer;
+      .table-box {
+        padding-left: 0;
+        padding-right: 0;
+
+        .table {
+          ::ng-deep .mat-mdc-row:hover {
+            background-color: rgb(238, 237, 237);
+            transition: 0.1s;
+          }
+          ::ng-deep .mat-mdc-row {
+            cursor: pointer;
+          }
         }
       }
     }
