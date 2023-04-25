@@ -36,4 +36,8 @@ export class OrganizationService {
   filterOrgs(request: OrganizationFilter): Observable<Response<Organization[]>> {
     return this.http.post<Response<Organization[]>>(this.url + '/Filter', request)
   }
+
+  getChartData(request: OrganizationFilter): Observable<Response<Organization[]>> {
+    return this.http.post<Response<Organization[]>>(this.url + '/GetChartData', request)
+  }
 }

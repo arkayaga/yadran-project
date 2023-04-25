@@ -15,7 +15,7 @@ import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginato
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
+// import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from "@angular/material/sort";
 import { MatTabsModule } from '@angular/material/tabs';
@@ -24,20 +24,19 @@ import { MatPaginatorService } from "./utilities/mat-paginator.service";
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TranslateModule } from "@ngx-translate/core";
 import { MatListModule } from '@angular/material/list';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 
 @NgModule({
-    declarations: [
-        // SearchPipe,
-    ],
+
     imports: [
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
-        TranslateModule
+        TranslateModule,
+        NgApexchartsModule
     ],
     exports: [
-        // SearchPipe,
         MatTableModule,
         MatButtonModule,
         MatInputModule,
@@ -58,11 +57,13 @@ import { MatListModule } from '@angular/material/list';
         MatCardModule,
         MatButtonToggleModule,
         MatListModule,
-        TranslateModule
+        TranslateModule,
+        NgApexchartsModule
+
     ],
     providers: [
         // { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' },
-        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+        // { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
         { provide: MatPaginatorIntl, useClass: MatPaginatorService },
     ]
 })
