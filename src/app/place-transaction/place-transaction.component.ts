@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { DetailsPlaceTransactionComponent } from './details-place-transaction/details-place-transaction.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { FormControl } from '@angular/forms';
 import * as XLSX from 'xlsx'
 
 @Component({
@@ -22,6 +21,7 @@ export class PlaceTransactionComponent implements AfterViewInit {
   selectedPlace: Place;
   display: boolean = false;
   details = [];
+
   displayedColumns: string[] = [
     'name',
     'createdAt',
@@ -67,9 +67,6 @@ export class PlaceTransactionComponent implements AfterViewInit {
       type: 'text'
     },
   ];
-
-  searchField = new FormControl();
-  searchValue = '';
 
   fileName = 'KasaYonetimi-Detay.xlsx';
 
