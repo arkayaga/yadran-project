@@ -1,1 +1,24 @@
-<h2>Welcome: {{ username }}</h2>
+<mat-card>
+  <h2>Welcome: {{ username }}</h2>
+</mat-card>
+
+<div>
+  <h3>Org. Mekan Dağılımı</h3>
+  <mat-card class="card-chart">
+    <div class="chart">
+      <apx-chart
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [labels]="chartOptions.labels"
+        [responsive]="chartOptions.responsive"
+        [plotOptions]="chartOptions.plotOptions"
+        [dataLabels]="chartOptions.dataLabels"
+      ></apx-chart>
+    </div>
+  </mat-card>
+
+  <div>
+    <h3>Mekan Kasa Durumları</h3>
+    <mat-card> column chart </mat-card>
+  </div>
+</div>

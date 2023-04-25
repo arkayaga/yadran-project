@@ -2,6 +2,16 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80vw;
-  height: 80vh;
+  width: 40vw;
+  height: 40vh;
+}
+
+.card-chart {
+  width: 50%;
+  height: 250px;
+  .chart {
+    // max-width: 380px;
+    margin: 35px auto;
+    padding: 0;
+  }
 }
