@@ -71,8 +71,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.getPlaces()
     this.getChartData();
+
+    // setTimeout(() => {
     this.apexDonut();
     this.apexColumn();
+
+    // }, 1);
   }
 
   ngOnInit(): void {
@@ -87,47 +91,53 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   apexDonut() {
+    // setTimeout(() => {
     this.donutChartOptions = {
-      series: [],
-      chart: {
-        type: "donut",
-        // width: '100%',
-        // height: 'auto'
-      },
-      plotOptions: {
-        pie: {
-          donut: {
-            labels: {
-              show: true,
-              total: {
-                showAlways: false,
+      ...this.donutChartOptions = {
+        series: [],
+        chart: {
+          type: "donut",
+          // width: 300,
+          // height: 300
+        },
+        plotOptions: {
+          pie: {
+            donut: {
+              labels: {
                 show: true,
+                total: {
+                  showAlways: false,
+                  show: true,
+                }
               }
             }
           }
-        }
-      },
-      labels: [],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: "bottom"
+        },
+        labels: [],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                position: "bottom"
+              }
             }
           }
-        }
-      ],
-      dataLabels: {
-        enabled: true,
-        formatter(_value, { seriesIndex, w }) {
-          return w.config.series[seriesIndex]
+        ],
+        dataLabels: {
+          enabled: true,
+          formatter(_value, { seriesIndex, w }) {
+            return w.config.series[seriesIndex]
+          }
         }
       }
-    };
+
+    }
+
+    // }, 500);
 
   }
 
@@ -148,81 +158,90 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   apexColumn() {
+
+    // setTimeout(() => {
     this.columnChartOptions = {
-      series: [
-        {
-          name: "Kasa Durumu",
-          data: [],
-        }
-      ],
-      chart: {
-        toolbar: {
+      ...this.columnChartOptions = {
+        series: [
+          {
+            name: "Kasa Durumu",
+            data: [],
+          }
+        ],
+        chart: {
+          // width: 300,
+          // height: 300,
+          toolbar: {
+            show: false
+          },
+          type: "bar",
+          events: {
+            // click(chart, w, e) {
+            // console.log(chart, w, e)
+            // }
+          }
+        },
+        colors: [
+          "#008FFB",
+          "#00E396",
+          "#FEB019",
+          "#FF4560",
+          "#775DD0",
+          "#546E7A",
+          "#26a69a",
+          "#D10CE8"
+        ],
+        plotOptions: {
+          bar: {
+            columnWidth: "25%",
+            distributed: true
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        legend: {
           show: false
         },
-        height: 350,
-        type: "bar",
-        events: {
-          // click(chart, w, e) {
-          // console.log(chart, w, e)
-          // }
-        }
-      },
-      colors: [
-        "#008FFB",
-        "#00E396",
-        "#FEB019",
-        "#FF4560",
-        "#775DD0",
-        "#546E7A",
-        "#26a69a",
-        "#D10CE8"
-      ],
-      plotOptions: {
-        bar: {
-          columnWidth: "25%",
-          distributed: true
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      legend: {
-        show: false
-      },
-      grid: {
-        show: false
-      },
-      xaxis: {
-        categories: [],
-        labels: {
-          style: {
-            colors: [
-              "#008FFB",
-              "#00E396",
-              "#FEB019",
-              "#FF4560",
-              "#775DD0",
-              "#546E7A",
-              "#26a69a",
-              "#D10CE8"
-            ],
-            fontSize: "12px"
+        grid: {
+          show: false
+        },
+        xaxis: {
+          categories: [],
+          labels: {
+            style: {
+              colors: [
+                "#008FFB",
+                "#00E396",
+                "#FEB019",
+                "#FF4560",
+                "#775DD0",
+                "#546E7A",
+                "#26a69a",
+                "#D10CE8"
+              ],
+              fontSize: "12px"
+            }
           }
-        }
-      },
-      yaxis: {
-        labels: {
-          formatter: (val) => {
-            if (val >= 1000000) {
-              return val / 1000000 + "M";
-            } else {
-              return val / 1000 + "K";
+        },
+        yaxis: {
+          labels: {
+            formatter: (val) => {
+              if (val >= 1000000) {
+                return val / 1000000 + "M";
+              } else {
+                return val / 1000 + "K";
 
+              }
             }
           }
         }
       }
-    };
+
+    }
+    window.dispatchEvent(new Event('resize'))
+
+    // }, 500);
   }
 
   getPlaces() {
