@@ -1,17 +1,26 @@
-h2 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40vw;
-  height: 40vh;
-}
+.dashboard {
+  margin: 20px;
 
-.card-chart {
-  width: 50%;
-  height: 250px;
-  .chart {
-    // max-width: 380px;
-    margin: 35px auto;
-    padding: 0;
+  .dashboard-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+
+    mat-card {
+      width: 33%;
+      height: 120px;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .card-chart {
+    display: flex;
+    justify-content: space-between;
+
+    .chart {
+      width: 49%;
+    }
   }
 }

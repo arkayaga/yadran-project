@@ -1,24 +1,86 @@
-<mat-card>
-  <h2>Welcome: {{ username }}</h2>
-</mat-card>
+<div class="dashboard">
+  <div class="dashboard-box">
+    <mat-card>
+      <h2>Hoş Geldin, {{ username }}</h2>
+    </mat-card>
 
-<div>
-  <h3>Org. Mekan Dağılımı</h3>
-  <mat-card class="card-chart">
+    <mat-card>
+      <h2>Bu Yıl Tamamlanan</h2>
+      <h1>-</h1>
+    </mat-card>
+
+    <mat-card>
+      <h2>Bugün Gerçekleşecek</h2>
+      <h1>-</h1>
+    </mat-card>
+  </div>
+
+  <h3>Bu Ay</h3>
+  <div class="dashboard-box">
+    <mat-card>
+      <h2>Kaporası Alınan Organizasyon</h2>
+      <h1>-</h1>
+    </mat-card>
+
+    <mat-card>
+      <h2>Tamamlanan Organizasyon</h2>
+      <h1>-</h1>
+    </mat-card>
+
+    <mat-card>
+      <h2>Rezervasyon Sayısı</h2>
+      <h1>-</h1>
+    </mat-card>
+  </div>
+
+  <h3>Bu Hafta</h3>
+  <div class="dashboard-box">
+    <mat-card>
+      <h2>Kaporası Alınan Organizasyon</h2>
+      <h1>-</h1>
+    </mat-card>
+
+    <mat-card>
+      <h2>Tamamlanan Organizasyon</h2>
+      <h1>-</h1>
+    </mat-card>
+
+    <mat-card>
+      <h2>Rezervasyon Sayısı</h2>
+      <h1>-</h1>
+    </mat-card>
+  </div>
+
+  <div class="card-chart">
     <div class="chart">
-      <apx-chart
-        [series]="chartOptions.series"
-        [chart]="chartOptions.chart"
-        [labels]="chartOptions.labels"
-        [responsive]="chartOptions.responsive"
-        [plotOptions]="chartOptions.plotOptions"
-        [dataLabels]="chartOptions.dataLabels"
-      ></apx-chart>
+      <h3>Org. Mekan Dağılımı</h3>
+      <mat-card class="donut">
+        <apx-chart
+          [series]="donutChartOptions.series"
+          [chart]="donutChartOptions.chart"
+          [labels]="donutChartOptions.labels"
+          [responsive]="donutChartOptions.responsive"
+          [plotOptions]="donutChartOptions.plotOptions"
+          [dataLabels]="donutChartOptions.dataLabels"
+        ></apx-chart>
+      </mat-card>
     </div>
-  </mat-card>
 
-  <div>
-    <h3>Mekan Kasa Durumları</h3>
-    <mat-card> column chart </mat-card>
+    <div class="chart">
+      <h3>Mekan Kasa Durumları</h3>
+      <mat-card class="column">
+        <apx-chart
+          [series]="columnChartOptions.series"
+          [chart]="columnChartOptions.chart"
+          [dataLabels]="columnChartOptions.dataLabels"
+          [plotOptions]="columnChartOptions.plotOptions"
+          [yaxis]="columnChartOptions.yaxis"
+          [xaxis]="columnChartOptions.xaxis"
+          [legend]="columnChartOptions.legend"
+          [colors]="columnChartOptions.colors"
+          [grid]="columnChartOptions.grid"
+        ></apx-chart>
+      </mat-card>
+    </div>
   </div>
 </div>
