@@ -16,9 +16,9 @@ import {
   ApexXAxis,
   ApexLegend,
   ApexYAxis,
-  ApexGrid
-} from "ng-apexcharts";
-
+  ApexGrid,
+} from 'ng-apexcharts';
+import { Place } from '../core/place/place.model';
 
 export type DonutChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -43,7 +43,7 @@ export type ColumnChartOptions = {
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
   username: string;
@@ -53,10 +53,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   beginDate: string;
   endDate: string;
 
-  @ViewChild("donut") donut: ChartComponent;
+  @ViewChild('donut') donut: ChartComponent;
   public donutChartOptions: Partial<DonutChartOptions>;
 
-  @ViewChild("column") column: ChartComponent;
+  @ViewChild('column') column: ChartComponent;
   public columnChartOptions: Partial<ColumnChartOptions>;
 
   places = [];
@@ -65,38 +65,32 @@ export class HomeComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private organizationService: OrganizationService,
     private placeService: PlaceService,
-    private placeTransaction: PlaceTransactionService,
-
+    private placeTransaction: PlaceTransactionService
   ) {
-
-    this.getPlaces()
-    this.getChartData();
-
-    // setTimeout(() => {
     this.apexDonut();
     this.apexColumn();
 
-    // }, 1);
+    this.getPlaces();
+    this.getChartData();
   }
 
   ngOnInit(): void {
-    this.userSub = this.authService.getUser().subscribe(user => {
-      this.username = user?.username ?? ''
-    })
+    this.userSub = this.authService.getUser().subscribe((user) => {
+      this.username = user?.username ?? '';
+    });
   }
 
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
   }
 
-
   apexDonut() {
     // setTimeout(() => {
     this.donutChartOptions = {
-      ...this.donutChartOptions = {
+      ...(this.donutChartOptions = {
         series: [],
         chart: {
-          type: "donut",
+          type: 'donut',
           // width: 300,
           // height: 300
         },
@@ -108,10 +102,10 @@ export class HomeComponent implements OnInit, OnDestroy {
                 total: {
                   showAlways: false,
                   show: true,
-                }
-              }
-            }
-          }
+                },
+              },
+            },
+          },
         },
         labels: [],
         responsive: [
@@ -119,26 +113,23 @@ export class HomeComponent implements OnInit, OnDestroy {
             breakpoint: 480,
             options: {
               chart: {
-                width: 200
+                width: 200,
               },
               legend: {
-                position: "bottom"
-              }
-            }
-          }
+                position: 'bottom',
+              },
+            },
+          },
         ],
         dataLabels: {
           enabled: true,
           formatter(_value, { seriesIndex, w }) {
-            return w.config.series[seriesIndex]
-          }
-        }
-      }
-
-    }
-
+            return w.config.series[seriesIndex];
+          },
+        },
+      }),
+    };
     // }, 500);
-
   }
 
   getChartData() {
@@ -148,123 +139,155 @@ export class HomeComponent implements OnInit, OnDestroy {
       endDate: this.endDate ? moment(this.endDate) : null,
     };
     this.organizationService.getChartData(request).subscribe((x: any) => {
-      x.data.forEach(y => {
-        this.donutChartOptions.series.push(y.count)
-        this.donutChartOptions.labels.push(y.placeName)
-
+      x.data.forEach((y) => {
+        this.donutChartOptions.series.push(y.count);
+        this.donutChartOptions.labels.push(y.placeName);
       });
-    })
+    });
   }
 
-
   apexColumn() {
-
     // setTimeout(() => {
     this.columnChartOptions = {
-      ...this.columnChartOptions = {
+      ...(this.columnChartOptions = {
         series: [
           {
-            name: "Kasa Durumu",
+            // name: 'Kasa Durumu',
             data: [],
-          }
+          },
         ],
         chart: {
           // width: 300,
           // height: 300,
           toolbar: {
-            show: false
+            show: false,
           },
-          type: "bar",
-          events: {
-            // click(chart, w, e) {
-            // console.log(chart, w, e)
-            // }
-          }
+          type: 'bar',
         },
         colors: [
-          "#008FFB",
-          "#00E396",
-          "#FEB019",
-          "#FF4560",
-          "#775DD0",
-          "#546E7A",
-          "#26a69a",
-          "#D10CE8"
+          '#008FFB',
+          '#00E396',
+          '#FEB019',
+          '#FF4560',
+          '#775DD0',
+          '#546E7A',
+          '#26a69a',
+          '#D10CE8',
         ],
         plotOptions: {
           bar: {
-            columnWidth: "25%",
-            distributed: true
-          }
+            columnWidth: '25%',
+            distributed: true,
+          },
         },
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         legend: {
-          show: false
+          show: false,
         },
         grid: {
-          show: false
+          show: false,
         },
         xaxis: {
           categories: [],
           labels: {
             style: {
               colors: [
-                "#008FFB",
-                "#00E396",
-                "#FEB019",
-                "#FF4560",
-                "#775DD0",
-                "#546E7A",
-                "#26a69a",
-                "#D10CE8"
+                '#008FFB',
+                '#00E396',
+                '#FEB019',
+                '#FF4560',
+                '#775DD0',
+                '#546E7A',
+                '#26a69a',
+                '#D10CE8',
               ],
-              fontSize: "12px"
-            }
-          }
+              fontSize: '12px',
+            },
+          },
         },
         yaxis: {
           labels: {
             formatter: (val) => {
               if (val >= 1000000) {
-                return val / 1000000 + "M";
+                return val / 1000000 + 'M';
               } else {
-                return val / 1000 + "K";
-
+                return val / 1000 + 'K';
               }
-            }
-          }
-        }
-      }
-
-    }
-    window.dispatchEvent(new Event('resize'))
+            },
+          },
+        },
+      }),
+    };
+    // window.dispatchEvent(new Event('resize'));
 
     // }, 500);
   }
 
-  getPlaces() {
-    this.placeService.getPlaces()
-      .subscribe(places => {
-        this.places = places.data
-        this.places.forEach((x: any) => {
-          console.log(x)
-          this.getPlaceCashboxAmount(x.id)
-          this.columnChartOptions.xaxis.categories.push(x.name)
+  // getPlaces() {
+  //   this.placeService.getPlaces().subscribe((places) => {
+  //     this.places = places.data;
+  //     this.places.forEach((x: any, index) => {
+  //       this.getPlaceCashboxAmount(x, index);
+  //     });
+  //   });
+  // }
+  // data = [];
+  // categories = [];
+  // getPlaceCashboxAmount(place, indx) {
+  //   this.placeTransaction.getPlaceCashboxAmount(place.id).subscribe((x: any) => {
 
-        })
-      })
-  }
+  //     this.data.push(x.data);
+  //     this.categories.push(place.name);
 
-  getPlaceCashboxAmount(id) {
-    this.placeTransaction.getPlaceCashboxAmount(id).subscribe((x: any) => {
-      console.log(x)
-      const index = this.places.findIndex(plc => plc.id === id);
-      this.places[index].amount = x.data
-      this.columnChartOptions.series[0].data.push(x.data)
+  //     if (indx === this.places.length - 1) {
+  //       this.categories.map(item => {
+  //         this.columnChartOptions.xaxis.categories.push(item);
+  //       })
 
+  //       setTimeout(() => {
+  //         this.columnChartOptions.series[0].data = this.data;
+  //       }, 11);
+  //     }
+  //   });
+  // }
+
+  resolveAfter2Seconds(place) {
+    return new Promise((resolve) => {
+      this.placeTransaction
+        .getPlaceCashboxAmount(place.id)
+        .subscribe((x: any) => {
+          console.log(x);
+          resolve(x);
+        });
     });
   }
 
+  async getPlaceCashboxAmount(place) {
+    const value = <Place>await this.resolveAfter2Seconds(place);
+    console.log(value);
+  }
+
+  getPlaces() {
+    this.placeService.getPlaces().subscribe((places) => {
+      this.places = places.data;
+      this.places.forEach((x: any) => {
+        // console.log(x)
+        this.getPlaceCashboxAmount(x);
+        this.columnChartOptions.xaxis.categories.push(x.name);
+      });
+    });
+  }
+
+  // getPlaceCashboxAmount(place) {
+  //   this.placeTransaction
+  //     .getPlaceCashboxAmount(place.id)
+  //     .subscribe((x: any) => {
+  //       // console.log(x)
+  //       const index = this.places.findIndex((plc) => plc.id === place.id);
+  //       this.places[index].amount = x.data;
+  //       this.columnChartOptions.series[0].data.push(x.data);
+  //     });
+  // }
 }
